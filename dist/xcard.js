@@ -1,0 +1,1 @@
+(function(){var t=this;(function(){(function(){this.XCard={VERSION:"0.0.1",config:{}}}).call(this)}).call(t);var e=t.XCard;(function(){}).call(this),"object"==typeof module&&module.exports?module.exports=e:"function"==typeof define&&define.amd&&define(e)}).call(this);

@@ -1,0 +1,18 @@
+# .blade.yml
+load_paths:
+  - test/src
+  - src
+  
+
+logical_paths:
+  - xcard.js
+  - test.js
+
+build:
+  logical_paths:
+    - xcard.js
+  path: dist
+  js_compressor: uglifier # Optional
+
+require:
+  - sprockets/export
