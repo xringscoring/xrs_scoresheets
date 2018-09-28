@@ -6,5 +6,6 @@
   VERSION: "0.0.1"
 
   config: {
+    maxCellsPerRow: 12
     classPrefix: 'xcard'
   }

@@ -1,16 +1,19 @@
 # .blade.yml
 load_paths:
   - test/src
+  - assets
   - src
-  
+
 
 logical_paths:
   - xcard.js
   - test.js
+  - xcard.css
 
 build:
   logical_paths:
     - xcard.js
+    - xcard.css
   path: dist
   js_compressor: uglifier # Optional
 

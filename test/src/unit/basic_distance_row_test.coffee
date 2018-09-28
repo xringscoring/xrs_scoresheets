@@ -1,6 +1,6 @@
 QUnit.test "BasicDistanceRow with 6 shots per end", (assert)->
   row = new XCard.BasicDistanceRow(6, {withGolds: true, goldsDescriptor: 'fudge'})
-  assert.equal row.MAX_SCORING_CELLS, 12
+  
   assert.ok row.renderGolds()
   assert.equal row.goldsDescriptor(), 'fudge'
 

@@ -1,13 +1,11 @@
 class XCard.BasicDistanceRow
 
   constructor: (@shotsPerEnd, options = {})->
-    # Limit
-    @MAX_SCORING_CELLS = 12
 
     @options = Object.assign({
       withHits: true,
       withGolds: true,
-      withMatchPoints: false,
+      withPoints: false,
       withX: false,
       goldsDescriptor: 'g'
       hitsDescriptor: 'h'
@@ -19,10 +17,10 @@ class XCard.BasicDistanceRow
   buildCells: ()->
     @cells = []
     scoringCellsPerRow = @getScoringCellsPerRow()
-    scoringCellChunks = @getScoringCellChunkCount()
+    endsPerRow = @getEndsPerRow()
 
-    for t in [1..(scoringCellsPerRow / scoringCellChunks)]
-      for s in [1..scoringCellChunks]
+    for t in [1..(scoringCellsPerRow / endsPerRow)]
+      for s in [1..endsPerRow]
         @cells.push( new XCard.ScoreCell() )
 
       @cells.push( new XCard.EndTotalCell())
@@ -52,7 +50,7 @@ class XCard.BasicDistanceRow
   getScoringCellsPerRow: ()->
     return if @shotsPerEnd <= 3 then 6 else 12
 
-  getScoringCellChunkCount: ()->
+  getEndsPerRow: ()->
     # Switch statements with range value operators are very slow
     if @shotsPerEnd <= 3
       return 3

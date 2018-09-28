@@ -34,4 +34,8 @@ XCard.extend
     if options.textContent
       element.textContent = options.textContent
 
+    # Table-specific
+    if options.colSpan
+      element.setAttribute('colspan', options.colSpan)
+      
     element

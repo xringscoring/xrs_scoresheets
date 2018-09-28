@@ -1,0 +1,19 @@
+table.xcard, td {
+  border: 1px solid gray; }
+
+td {
+  min-width: 15px;
+  padding: 5px; }
+
+td.end-total-cell {
+  background-color: blue;
+  color: white; }
+
+td.row-total-score, .row-golds-total, .row-hits-total, .row-running-total {
+  background-color: green;
+  color: white;
+  padding: 5px 10px;
+  font-weight: bold; }
+
+td.score-cell.unused {
+  background-color: gray; }
