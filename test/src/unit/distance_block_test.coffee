@@ -13,6 +13,7 @@ QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert
   assert.equal(block.rowCount, 3, 'row count is correct')
   assert.equal(block.titleCellSpan, 14, 'title cellspan')
 
+
 QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
   endsData = [
     {
@@ -61,7 +62,8 @@ QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
 
   config = new XCard.DistanceConfig({
     shotsPerEnd: 3,
-    totalShots: 60
+    totalShots: 60,
+    withX: false
   })
 
   block = new XCard.DistanceBlock({
@@ -78,4 +80,4 @@ QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
   assert.equal(block.chunkedEndsScoreData[0].length, 2)
   assert.equal(block.chunkedEndsScoreData[1].length, 1)
 
-  # assert.equal(block.toHtml().outerHTML, '<tbody></tbody>')
+  assert.equal(block.toHtml().outerHTML, '<tbody></tbody>')

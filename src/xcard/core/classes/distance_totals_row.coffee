@@ -5,7 +5,7 @@ class XCard.DistanceTotalsRow
       config: null,
       title: '1',
       cellSpan: 1
-      totals: {}
+      totals: null
     }, options)
 
     unless @options.config?
@@ -39,7 +39,7 @@ class XCard.DistanceTotalsRow
   getRowGoldsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalGolds(),
+      textContent: @options.totals.totalGolds.toString(),
       className: "total-golds-cell"
     })
     cell
@@ -55,7 +55,7 @@ class XCard.DistanceTotalsRow
   getRowHitsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalHits(),
+      textContent: @options.totals.totalHits.toString(),
       className: "total-hits-cell"
     })
     cell
@@ -63,7 +63,7 @@ class XCard.DistanceTotalsRow
   getRowPointsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalPoints(),
+      textContent: @options.totals.totalPoints.toString(),
       className: "total-points-cell"
     })
     cell
@@ -71,7 +71,7 @@ class XCard.DistanceTotalsRow
   getRowXCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalX(),
+      textContent: @options.totals.totalX.toString(),
       className: "total-x-cell"
     })
     cell
@@ -79,7 +79,7 @@ class XCard.DistanceTotalsRow
   getRunningTotalCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.runningTotalPoints(),
+      textContent: @options.totals.totalScore.toString(),
       className: "total-score-cell"
     })
     cell

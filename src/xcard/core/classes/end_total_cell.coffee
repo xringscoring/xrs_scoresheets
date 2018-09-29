@@ -3,7 +3,7 @@ class XCard.EndTotalCell extends XCard.BasicCell
   constructor: (@options = {}) ->
     unless @options.config?
       throw "EndTotalCell requires DistanceConfig"
-      
+
     @scoringCells = @options.scoringCells ? []
 
     super({
@@ -35,8 +35,9 @@ class XCard.EndTotalCell extends XCard.BasicCell
   # TODO: may not be best place for this...?
   #
   totalGolds: ()->
+    self = @
     @scoringCells.reduce( (accum, sc)->
-      accum + if sc.isGold then 1 else 0e0
+      accum + if sc.score() is self.options.config.goldScore then 1 else 0
     , 0)
 
   totalScore: () ->

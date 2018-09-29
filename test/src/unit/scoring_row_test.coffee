@@ -41,7 +41,8 @@ QUnit.test "ScoringRow builds correctly for 3 SPE", (assert)->
   scoringRow = new XCard.ScoringRow({
     cellCount: 3,
     endCount: 2,
-    config: config
+    config: config,
+    totals: new XCard.Totalizer
   }, endShotData)
 
   assert.equal(scoringRow.scoringEnds.length, 2, 'scoringEnds count')
@@ -97,7 +98,8 @@ QUnit.test "ScoringRow builds correctly for 5 SPE", (assert)->
     config: new XCard.DistanceConfig({
       shotsPerEnd: 5,
       totalShots: 60
-    })
+    }),
+    totals: new XCard.Totalizer
   }, endShotData)
 
   assert.equal(scoringRow.scoringEnds.length, 2)

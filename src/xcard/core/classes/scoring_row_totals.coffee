@@ -4,6 +4,7 @@ class XCard.ScoringRowTotals
     @options = Object.assign({
       config: null
       scoringEnds: [],
+      totals: null
     }, options)
 
     unless @options.config?
@@ -13,17 +14,29 @@ class XCard.ScoringRowTotals
     @buildTotals()
 
   buildTotals: ()->
+    rowTotalScore = @getRowTotalScore()
+    @options.totals.totalScore += rowTotalScore
+
+    rowTotalHits = @getRowTotalHits()
+    @options.totals.totalHits += rowTotalHits
+
+    rowTotalGolds = @getRowTotalGolds()
+    @options.totals.totalGolds += rowTotalGolds
+
+    rowTotalX = @getRowTotalX()
+    @options.totals.totalX += rowTotalX
+
     @cells = [
       new XCard.BasicCell({
         className: 'row-total-score',
-        textContent: @getRowTotalScore().toString()
+        textContent: rowTotalScore.toString()
         })
     ]
 
     if @options.config.withHits
       @cells.push(new XCard.BasicCell({
         className: 'row-hits-total',
-        textContent: @getRowTotalHits().toString()
+        textContent: rowTotalHits.toString()
       }))
 
     # if @options.withPoints
@@ -31,13 +44,13 @@ class XCard.ScoringRowTotals
     if @options.config.withGolds
       @cells.push(new XCard.BasicCell({
         className: 'row-golds-total',
-        textContent: @getRowTotalGolds().toString()
+        textContent: rowTotalGolds.toString()
       }))
 
     if @options.config.withX
       @cells.push(new XCard.BasicCell({
         className: 'row-x-total',
-        textContent: @getRowTotalX().toString()
+        textContent: rowTotalX.toString()
       }))
 
     #
@@ -45,11 +58,8 @@ class XCard.ScoringRowTotals
     #
     @cells.push(new XCard.BasicCell({
       className: 'row-running-total'
-      textContent: 'rt'
+      textContent: @options.totals.totalScore.toString()
       }))
-
-    # if @options.withPoints
-    #   @cells.push RUNNINGTOTALPOINTS
 
   cells: ()->
     @cells

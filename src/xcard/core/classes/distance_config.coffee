@@ -13,6 +13,7 @@ class XCard.DistanceConfig
       compoundMatch: false
     }, options)
 
+    @goldScore = @options.goldScore
     @shotsPerEnd = @options.shotsPerEnd
     @totalShots = @options.totalShots
     @title = @options.title

@@ -4,32 +4,24 @@ class XCard.DistanceBlock
     @options = Object.assign({
       element: 'tbody',
       config: null
-      # We need a 'round totalizer' tracking overall totals
     }, options)
 
     unless @options.config?
       throw 'Distance configuration is required'
 
     @config = @options.config
+    @totalizer = @options.totalizer ? new XCard.Totalizer({config: @config})
 
     @configureBlock()
 
   configureBlock: ()->
-    @shotsPerEnd = @config.shotsPerEnd
-    @totalShots = @config.totalShots
-
-    @numberOfEnds = @totalShots / @shotsPerEnd
+    @numberOfEnds = @config.totalShots / @config.shotsPerEnd
 
     @endsPerRow = @getEndsPerRow()
     @cellsPerEnd = @getCellsPerEnd()
 
     @rowCount = @numberOfEnds / @endsPerRow
     @endTotalCells = @endsPerRow
-
-    @withHits = @options.withHits
-    @withGolds = @options.withGolds
-    @withPoints = @options.withPoints
-    @withX = @options.withX
 
     @titleCellSpan = @getTitleCellSpan()
 
@@ -48,50 +40,26 @@ class XCard.DistanceBlock
         cellCount: @cellsPerEnd,
         endCount: @endsPerRow,
         config: @config,
-        # shotsPerEnd: @shotsPerEnd,
-        # withX: @withX,
-        # withGolds: @withGolds,
-        # withHits: @withHits,
-        # withPoints: @withPoints
-
+        totals: @totalizer
       }, @chunkedEndsScoreData[r - 1]))
 
     @rows.push new XCard.DistanceTotalsRow({
       config: @config,
-      # withX: @withX,
-      # withGolds: @withGolds,
-      # withHits: @withHits,
-      # withPoints: @withPoints,
+      totals: @totalizer,
       cellSpan: @titleCellSpan
-      totals: {
-        totalHits: ()->
-          0e0.toString()
-        ,
-        totalGolds: ()->
-          0e0.toString()
-        ,
-        totalX: ()->
-          0e0.toString()
-        ,
-        runningTotal: ()->
-          0e0.toString()
-        ,
-        runningTotalPoints: ()->
-          0e0.toString()
-      }
     })
 
   getCellsPerEnd: ()->
-    if @shotsPerEnd <= 3
+    if @config.shotsPerEnd <= 3
       return 3
 
-    if @shotsPerEnd <= 6
+    if @config.shotsPerEnd <= 6
       return 6
 
     12
 
   getEndsPerRow: ()->
-    return if @shotsPerEnd <= 6 then 2 else 1
+    return if @config.shotsPerEnd <= 6 then 2 else 1
 
   getTitleCellSpan: ()->
     (@endsPerRow * @cellsPerEnd) + @endTotalCells

@@ -1,9 +1,29 @@
 class XCard.Totalizer
 
-  constructor: (config = {}) ->
-    @withGolds = config.withGolds ? false
-    @withX = config.withX ? false
-    @withPoints = config.recurveMatch ? false
-    @withHits = !@withPoints
+  constructor: (options = {}) ->
+    # unless options.config?
+    #   throw "Totalizer requires DistanceConfig"
 
     @totalHits = @totalScore = @totalPoints = @totalGolds = @totalX = 0
+
+  # totalHits: ()->
+  #   # @totalHits
+  #   8
+
+  # totalGolds: ()->
+  #   @totalGolds
+  #
+  # totalX: ()->
+  #   @totalX
+
+  # runningTotal: ()->
+  #   @totalScore
+  #
+  # runningTotalPoints: ()->
+  #   @totalPoints
+  #
+  # totalPoints: ()->
+  #   @runningTotalPoints()
+
+  # totalScore: ()->
+  #   @runningTotal()

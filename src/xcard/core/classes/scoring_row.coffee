@@ -12,6 +12,7 @@ class XCard.ScoringRow
       element: 'tr',
       endCount: 1,
       config: null
+      totals: null
     }, options)
 
     unless @options.config?
@@ -33,8 +34,9 @@ class XCard.ScoringRow
 
   buildTotalsBlock: () ->
     @totalsBlock = new XCard.ScoringRowTotals({
-      config: @options.config
-      scoringEnds: @scoringEnds
+      config: @options.config,
+      scoringEnds: @scoringEnds,
+      totals: @options.totals
     })
 
   toHtml: ()->
