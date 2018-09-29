@@ -2,36 +2,43 @@ class XCard.DistanceBlock
 
   constructor: (options = {}, @endsScoreData = {})->
     @options = Object.assign({
-      shotsPerEnd: 6, # actual shots per end
-      title: '1', # should be something like '90m'
-      totalShots: 36,
-      withGolds: true,
-      withHits: true,
-      withPoints: false,
-      withX: false
+      element: 'tbody',
+      config: null
+      # We need a 'round totalizer' tracking overall totals
     }, options)
+
+    unless @options.config?
+      throw 'Distance configuration is required'
+
+    @config = @options.config
 
     @configureBlock()
 
   configureBlock: ()->
-    @shotsPerEnd = @options.shotsPerEnd
-    @totalShots = @options.totalShots
+    @shotsPerEnd = @config.shotsPerEnd
+    @totalShots = @config.totalShots
+
     @numberOfEnds = @totalShots / @shotsPerEnd
+
     @endsPerRow = @getEndsPerRow()
     @cellsPerEnd = @getCellsPerEnd()
+
     @rowCount = @numberOfEnds / @endsPerRow
     @endTotalCells = @endsPerRow
+
     @withHits = @options.withHits
     @withGolds = @options.withGolds
     @withPoints = @options.withPoints
     @withX = @options.withX
+
     @titleCellSpan = @getTitleCellSpan()
 
     @chunkedEndsScoreData = XCard.chunkArray(@endsScoreData, @endsPerRow)
 
     @rows = [
-      new XCard.HeaderRow({
-        title: @options.title,
+      new XCard.DistanceHeaderRow({
+        config: @config,
+        title: @config.title,
         titleCellSpan: @titleCellSpan
       })
     ]
@@ -40,12 +47,39 @@ class XCard.DistanceBlock
       @rows.push( new XCard.ScoringRow({
         cellCount: @cellsPerEnd,
         endCount: @endsPerRow,
-        shotsPerEnd: @shotsPerEnd,
-        withX: @withX,
-        withGolds: @withGolds,
-        withHits: @withHits,
-        withPoints: @withPoints
+        config: @config,
+        # shotsPerEnd: @shotsPerEnd,
+        # withX: @withX,
+        # withGolds: @withGolds,
+        # withHits: @withHits,
+        # withPoints: @withPoints
+
       }, @chunkedEndsScoreData[r - 1]))
+
+    @rows.push new XCard.DistanceTotalsRow({
+      config: @config,
+      # withX: @withX,
+      # withGolds: @withGolds,
+      # withHits: @withHits,
+      # withPoints: @withPoints,
+      cellSpan: @titleCellSpan
+      totals: {
+        totalHits: ()->
+          0e0.toString()
+        ,
+        totalGolds: ()->
+          0e0.toString()
+        ,
+        totalX: ()->
+          0e0.toString()
+        ,
+        runningTotal: ()->
+          0e0.toString()
+        ,
+        runningTotalPoints: ()->
+          0e0.toString()
+      }
+    })
 
   getCellsPerEnd: ()->
     if @shotsPerEnd <= 3
@@ -63,7 +97,7 @@ class XCard.DistanceBlock
     (@endsPerRow * @cellsPerEnd) + @endTotalCells
 
   toHtml: ()->
-    element = document.createElement('tbody')
+    element = document.createElement(@options.element)
 
     for r in @rows
       element.appendChild(r.toHtml())

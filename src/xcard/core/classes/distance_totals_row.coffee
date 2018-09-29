@@ -1,32 +1,30 @@
-class XCard.HeaderRow
+class XCard.DistanceTotalsRow
 
   constructor: (options = {})->
     @options = Object.assign({
-      withGolds: true,
-      withHits: true,
-      withPoints: false,
-      withX: false,
+      config: null,
       title: '1',
-      titleCellSpan: 1
+      cellSpan: 1
+      totals: {}
     }, options)
 
+    unless @options.config?
+      throw "DistanceTotalsRow requires DistanceConfig"
+
     @cells = [
-      @getTitleCell(),
-      @getRowTotalCell()
+      @getSpacerCell(),
     ]
 
-    @cells.push @getRowPointsCell() if @options.withPoints
-    @cells.push @getRowHitsCell() if @options.withHits
-    @cells.push @getRowGoldsCell() if @options.withGolds
-    @cells.push @getRowXCell() if @options.withX
+    @cells.push @getRowHitsCell() if @options.config.withHits
+    @cells.push @getRowGoldsCell() if @options.config.withGolds
+    @cells.push @getRowXCell() if @options.config.withX
     @cells.push @getRunningTotalCell()
 
-  getTitleCell: ()->
+  getSpacerCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      colSpan: @options.titleCellSpan,
-      textContent: @options.title,
-      className: "title-cell"
+      colSpan: @options.cellSpan + 1,
+      textContent: '',
     })
     cell
 
@@ -41,8 +39,8 @@ class XCard.HeaderRow
   getRowGoldsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: "g",
-      className: "row-golds-cell"
+      textContent: @options.totals.totalGolds(),
+      className: "total-golds-cell"
     })
     cell
 
@@ -57,32 +55,32 @@ class XCard.HeaderRow
   getRowHitsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'h',
-      className: "row-hits-cell"
+      textContent: @options.totals.totalHits(),
+      className: "total-hits-cell"
     })
     cell
 
   getRowPointsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'pt',
-      className: "row-points-cell"
+      textContent: @options.totals.totalPoints(),
+      className: "total-points-cell"
     })
     cell
 
   getRowXCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'x',
-      className: "row-x-cell"
+      textContent: @options.totals.totalX(),
+      className: "total-x-cell"
     })
     cell
 
   getRunningTotalCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'tot',
-      className: "running-total-cell"
+      textContent: @options.totals.runningTotalPoints(),
+      className: "total-score-cell"
     })
     cell
 
@@ -91,10 +89,10 @@ class XCard.HeaderRow
     @toHtml().outerHTML
 
   toHtml: ()->
-    element = new XCard.BasicElement({ className: 'header-row' }, 'tr').toHtml()
+    element = new XCard.BasicElement({ className: 'totals-row' }, 'tr').toHtml()
 
     # Then total cells
     for c in @cells.slice(0)
       element.appendChild(c.toHtml())
-      
+
     element

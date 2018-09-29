@@ -2,7 +2,9 @@
 #= require xcard/core/classes/basic_element
 #= require xcard/core/classes/basic_distance_row
 #= require xcard/core/classes/basic_cell
-#= require xcard/core/classes/header_row
+#= require xcard/core/classes/distance_config
+#= require xcard/core/classes/distance_header_row
+#= require xcard/core/classes/distance_totals_row
 #= require xcard/core/classes/score_cell
 #= require xcard/core/classes/scoring_end
 #= require xcard/core/classes/scoring_row

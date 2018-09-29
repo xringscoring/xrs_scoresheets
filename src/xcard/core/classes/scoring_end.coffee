@@ -24,8 +24,11 @@ class XCard.ScoringEnd
     @options = Object.assign({
       cellCount: 3,
       scores: [],
-      shotsPerEnd: 3
+      config: null
     }, options)
+
+    unless @options.config?
+      throw "ScoringEnd requires DistanceConfig"
 
     @build()
 
@@ -36,12 +39,13 @@ class XCard.ScoringEnd
   buildScoringCells: () ->
     @scoringCells = []
     for i in [1..@options.cellCount]
-      unused = if i > @options.shotsPerEnd then true else false
+      unused = if i > @options.config.shotsPerEnd then true else false
       scores = @options.scores[i - 1] ? {}
       @scoringCells.push new XCard.ScoreCell(scores, unused)
 
   buildEndTotalCell: () ->
     @endTotalCell = new XCard.EndTotalCell({
+      config: @options.config
       scoringCells: @scoringCells
     })
 

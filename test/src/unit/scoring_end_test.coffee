@@ -22,8 +22,10 @@ QUnit.test "ScoringEnd builds correctly for 3 SPE", (assert)->
 
   scoringEnd = new XCard.ScoringEnd({
     cellCount: 3,
-    scores: shots,
-    shotsPerEnd: 3
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 3
+    }),
+    scores: shots
   })
 
   cells = scoringEnd.cells()
@@ -53,7 +55,9 @@ QUnit.test "ScoringEnd builds correctly for 3 SPE with only 2 scores", (assert)-
   scoringEnd = new XCard.ScoringEnd({
     cellCount: 3,
     scores: shots,
-    shotsPerEnd: 3
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 3
+    })
   })
 
   cells = scoringEnd.cells()
@@ -103,7 +107,9 @@ QUnit.test "ScoringEnd builds correctly for 5 SPE with 6 cells", (assert)->
   scoringEnd = new XCard.ScoringEnd({
     cellCount: 6,
     scores: shots,
-    shotsPerEnd: 5
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 5
+    }),
   })
 
   cells = scoringEnd.cells()

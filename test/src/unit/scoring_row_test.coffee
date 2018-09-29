@@ -32,19 +32,22 @@ QUnit.test "ScoringRow builds correctly for 3 SPE", (assert)->
       ]
     }
   ]
+
+  config = new XCard.DistanceConfig({
+    shotsPerEnd: 3,
+    totalShots: 60
+  })
+
   scoringRow = new XCard.ScoringRow({
     cellCount: 3,
     endCount: 2,
-    shotsPerEnd: 3,
-    withX: false,
-    withGolds: true,
-    withHits: true
+    config: config
   }, endShotData)
 
-  assert.equal(scoringRow.scoringEnds.length, 2)
-  assert.equal(scoringRow.totalsBlock.getRowTotalScore(), 59)
-  assert.equal(scoringRow.totalsBlock.getRowTotalGolds(), 5)
-  assert.equal(scoringRow.totalsBlock.getRowTotalHits(), 6)
+  assert.equal(scoringRow.scoringEnds.length, 2, 'scoringEnds count')
+  assert.equal(scoringRow.totalsBlock.getRowTotalScore(), 59, 'row total score')
+  assert.equal(scoringRow.totalsBlock.getRowTotalGolds(), 5, 'row total golds')
+  assert.equal(scoringRow.totalsBlock.getRowTotalHits(), 6, 'row total hits')
 
 
 QUnit.test "ScoringRow builds correctly for 5 SPE", (assert)->
@@ -91,10 +94,10 @@ QUnit.test "ScoringRow builds correctly for 5 SPE", (assert)->
   scoringRow = new XCard.ScoringRow({
     cellCount: 6,
     endCount: 2,
-    shotsPerEnd: 5,
-    withX: false,
-    withGolds: true,
-    withHits: true
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 5,
+      totalShots: 60
+    })
   }, endShotData)
 
   assert.equal(scoringRow.scoringEnds.length, 2)

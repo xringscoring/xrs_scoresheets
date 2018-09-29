@@ -2,12 +2,12 @@ class XCard.ScoringRowTotals
 
   constructor: (options = {})->
     @options = Object.assign({
-      withHits: false,
-      withGolds: false,
-      withPoints: false,
-      withX: false,
+      config: null
       scoringEnds: [],
     }, options)
+
+    unless @options.config?
+      throw "ScoringRow totals requires DistanceConfig"
 
     @scoringEnds = @options.scoringEnds
     @buildTotals()
@@ -20,7 +20,7 @@ class XCard.ScoringRowTotals
         })
     ]
 
-    if @options.withHits
+    if @options.config.withHits
       @cells.push(new XCard.BasicCell({
         className: 'row-hits-total',
         textContent: @getRowTotalHits().toString()
@@ -28,13 +28,13 @@ class XCard.ScoringRowTotals
 
     # if @options.withPoints
 
-    if @options.withGolds
+    if @options.config.withGolds
       @cells.push(new XCard.BasicCell({
         className: 'row-golds-total',
         textContent: @getRowTotalGolds().toString()
       }))
 
-    if @options.withX
+    if @options.config.withX
       @cells.push(new XCard.BasicCell({
         className: 'row-x-total',
         textContent: @getRowTotalX().toString()
@@ -58,6 +58,9 @@ class XCard.ScoringRowTotals
     @scoringEnds.reduce((accum, se)->
       accum + se.endTotalCell.totalGolds()
     , 0)
+
+  getRowTotalX: ()->
+    0
 
   getRowTotalHits: ()->
     @scoringEnds.reduce((accum, se)->

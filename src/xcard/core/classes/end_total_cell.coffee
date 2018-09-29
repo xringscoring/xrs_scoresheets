@@ -1,6 +1,9 @@
 class XCard.EndTotalCell extends XCard.BasicCell
 
   constructor: (@options = {}) ->
+    unless @options.config?
+      throw "EndTotalCell requires DistanceConfig"
+      
     @scoringCells = @options.scoringCells ? []
 
     super({

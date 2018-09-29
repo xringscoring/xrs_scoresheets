@@ -11,12 +11,11 @@ class XCard.ScoringRow
       cellCount: 3,
       element: 'tr',
       endCount: 1,
-      shotsPerEnd: 3,
-      withX: false,
-      withGolds: false,
-      withHits: false,
-      withPoints: false
+      config: null
     }, options)
+
+    unless @options.config?
+      throw "ScoringRow requires DistanceConfig"
 
     @buildScoringEnds()
     @buildTotalsBlock()
@@ -26,18 +25,15 @@ class XCard.ScoringRow
     for i in [1..@options.endCount]
       scoreData = @endScoresData[i - 1] ? {}
       scoringEnd = new XCard.ScoringEnd({
+        config: @options.config,
         cellCount: @options.cellCount,
-        shotsPerEnd: @options.shotsPerEnd
         scores: scoreData['shots'] ? []
       })
       @scoringEnds.push scoringEnd
 
   buildTotalsBlock: () ->
     @totalsBlock = new XCard.ScoringRowTotals({
-      withX: @options.withX,
-      withGolds: @options.withGolds,
-      withHits: @options.withHits,
-      withPoints: @options.withPoints,
+      config: @options.config
       scoringEnds: @scoringEnds
     })
 
