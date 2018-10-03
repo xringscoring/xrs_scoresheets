@@ -1,3 +1,1 @@
-# helpers = XCard.TestHelpers
-
-# helpers.extend
+#= require_self

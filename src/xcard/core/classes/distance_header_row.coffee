@@ -3,10 +3,6 @@ class XCard.DistanceHeaderRow
   constructor: (options = {})->
     @options = Object.assign({
       config: null
-      # withGolds: true,
-      # withHits: true,
-      # withPoints: false,
-      # withX: false,
       title: '1',
       titleCellSpan: 1
     }, options)
@@ -45,7 +41,7 @@ class XCard.DistanceHeaderRow
   getRowGoldsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: "g",
+      textContent: @forDisplay("g"),
       className: "row-golds-cell"
     })
     cell
@@ -53,7 +49,7 @@ class XCard.DistanceHeaderRow
   getRowTotalCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: "rt",
+      textContent: @forDisplay("rt"),
       className: "row-total-cell"
     })
     cell
@@ -61,7 +57,7 @@ class XCard.DistanceHeaderRow
   getRowHitsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'h',
+      textContent: @forDisplay('h'),
       className: "row-hits-cell"
     })
     cell
@@ -69,7 +65,7 @@ class XCard.DistanceHeaderRow
   getRowPointsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'pt',
+      textContent: @forDisplay('pt'),
       className: "row-points-cell"
     })
     cell
@@ -77,7 +73,7 @@ class XCard.DistanceHeaderRow
   getRowXCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'x',
+      textContent: @forDisplay('x'),
       className: "row-x-cell"
     })
     cell
@@ -85,10 +81,13 @@ class XCard.DistanceHeaderRow
   getRunningTotalCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: 'tot',
+      textContent: @forDisplay('tot'),
       className: "running-total-cell"
     })
     cell
+
+  forDisplay: (v)->
+    if @options.config.withTotalHeaders then v else ''
 
   # Refactor: already in BasicElement
   toHtmlString: ()->

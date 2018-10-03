@@ -1,4 +1,5 @@
 #= require_self
+#= require_tree ./fixtures
 #= require_tree .
 
 # Remove QUnit's globals

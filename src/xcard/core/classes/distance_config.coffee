@@ -10,7 +10,8 @@ class XCard.DistanceConfig
       goldScore: 10,
       withX: true,
       recurveMatch: false,
-      compoundMatch: false
+      compoundMatch: false,
+      withTotalHeaders: true
     }, options)
 
     @goldScore = @options.goldScore
@@ -23,6 +24,7 @@ class XCard.DistanceConfig
     @goldScore = @options.goldScore
     @withPoints = @showPoints()
     @withHits = @showHits()
+    @withTotalHeaders = @options.withTotalHeaders
 
   showHits: () ->
     !(@options.recurveMatch or @options.compoundMatch)

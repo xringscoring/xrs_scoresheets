@@ -1,4 +1,4 @@
-[
+@allTargetRounds = [
     {
         "deactivated":false,
         "default_shots_per_end":6,
@@ -3895,4 +3895,10 @@
         "short_name":"york",
         "origin":"StandardRound"
     }
-]
+].reduce( (h, r)->
+  h[r.short_name] = r
+  h
+, {})
+
+@getTargetRound = (shortName)->
+  @allTargetRounds[shortName]
