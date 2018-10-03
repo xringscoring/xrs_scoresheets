@@ -1,4 +1,5 @@
 $font-size: 1em;
+$cell-size: 40px;
 
 $dark: #0A0A0A;
 $white: white;
@@ -24,24 +25,36 @@ $body-color: $dark;
 
 html, body {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   font-size: $font-size;
 	letter-spacing: 0px;
 	color: $white;
   background-color: $body-color;
 }
 
-table.xcard, td {
-    border: 1px solid gray;
+body {
+  padding: 40px;
 }
 
-tbody {
-  padding-bottom: 10px;
+table {
+  margin: 30px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.xcard, td {
+    border: 2px solid gray;
+}
+
+tbody::before {
+  content: '';
+  display: block;
+  height: 20px;
 }
 
 td {
-  min-width: 30px;
-  height: 30px;
+  min-width: $cell-size;
+  height: $cell-size;
   padding: 5px;
   text-align: center;
   vertical-align: middle;
@@ -70,4 +83,8 @@ td.title-cell {
 tr.header-row td, tr.totals-row td {
   text-transform: uppercase;
   font-weight: bold;
+}
+
+tr.totals-row td.totals-spacer {
+  border: none;
 }

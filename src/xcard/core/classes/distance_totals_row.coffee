@@ -25,6 +25,7 @@ class XCard.DistanceTotalsRow
     cell.setAttributes({
       colSpan: @options.cellSpan + 1,
       textContent: '',
+      className: 'totals-spacer'
     })
     cell
 
