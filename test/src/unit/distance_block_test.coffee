@@ -80,4 +80,14 @@ QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
   assert.equal(block.chunkedEndsScoreData[0].length, 2)
   assert.equal(block.chunkedEndsScoreData[1].length, 1)
 
+  # Half-filled Scoring Row has a filled totalsBlock
+  assert.equal(block.rows[2].constructor.name, 'ScoringRow', 'is a ScoringRow')
+  assert.equal(block.rows[2].totalsBlock.cells[0].attributes['textContent'], '28', 'row total is correct')
+  assert.equal(block.rows[2].totalsBlock.cells[3].attributes['textContent'], '81', 'running total is correct')
+
+  # Unfilled scoring rows do not have filled total blocks
+  assert.equal(block.rows[3].constructor.name, 'ScoringRow', 'is a ScoringRow')
+  assert.equal(block.rows[3].totalsBlock.cells[0].attributes['textContent'], '', 'row total is empty')
+  assert.equal(block.rows[3].totalsBlock.cells[3].attributes['textContent'], '', 'running total is empty')
+
   assert.equal(block.toHtml().outerHTML, '<tbody></tbody>')

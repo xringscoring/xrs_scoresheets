@@ -34,6 +34,7 @@ QUnit.test "ScoringEnd builds correctly for 3 SPE", (assert)->
   assert.equal(cells[3].constructor.name, 'EndTotalCell')
   assert.equal(cells[3].totalScore(), 27)
   assert.equal(cells[3].textContent(), '27')
+  assert.ok(scoringEnd.hasAtLeastOneScore(), 'At least one score registered')
 
 
 QUnit.test "ScoringEnd builds correctly for 3 SPE with only 2 scores", (assert)->
@@ -109,7 +110,7 @@ QUnit.test "ScoringEnd builds correctly for 5 SPE with 6 cells", (assert)->
     scores: shots,
     config: new XCard.DistanceConfig({
       shotsPerEnd: 5
-    }),
+    })
   })
 
   cells = scoringEnd.cells()
@@ -120,3 +121,25 @@ QUnit.test "ScoringEnd builds correctly for 5 SPE with 6 cells", (assert)->
   assert.equal(cells[6].textContent(), '22')
 
   assert.equal(cells[5].getClasses(), 'score-cell unused')
+
+QUnit.test "Empty scoring ends reflect status correctly when all cells used", (assert)->
+  scoringEnd = new XCard.ScoringEnd({
+    cellCount: 6,
+    scores: [],
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 6
+    })
+  })
+
+  assert.ok(!scoringEnd.hasAtLeastOneScore(), 'no scores asserted')
+
+QUnit.test "Empty scoring ends reflect status correctly when 5 of 6 cells used", (assert)->
+  scoringEnd = new XCard.ScoringEnd({
+    cellCount: 6,
+    scores: [],
+    config: new XCard.DistanceConfig({
+      shotsPerEnd: 5
+    })
+  })
+
+  assert.ok(!scoringEnd.hasAtLeastOneScore(), 'no scores asserted')

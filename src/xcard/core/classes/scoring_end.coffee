@@ -54,6 +54,11 @@ class XCard.ScoringEnd
     ary.push( @endTotalCell )
     ary
 
+  hasAtLeastOneScore: ()->
+    @scoringCells.filter( (sc)->
+      sc.scoreValue?
+    ).length > 0
+
   totalHits: ()->
     @scoringCells.filter( (sc)->
       sc.score() > 0

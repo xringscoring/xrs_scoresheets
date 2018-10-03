@@ -11,6 +11,8 @@ class XCard.ScoringRowTotals
       throw "ScoringRow totals requires DistanceConfig"
 
     @scoringEnds = @options.scoringEnds
+    @displayTotals = @ensureAtLeastOneScoringEnd()
+
     @buildTotals()
 
   buildTotals: ()->
@@ -29,14 +31,14 @@ class XCard.ScoringRowTotals
     @cells = [
       new XCard.BasicCell({
         className: 'row-total-score',
-        textContent: rowTotalScore.toString()
+        textContent: @forDisplay(rowTotalScore)
         })
     ]
 
     if @options.config.withHits
       @cells.push(new XCard.BasicCell({
         className: 'row-hits-total',
-        textContent: rowTotalHits.toString()
+        textContent: @forDisplay(rowTotalHits)
       }))
 
     # if @options.withPoints
@@ -44,13 +46,13 @@ class XCard.ScoringRowTotals
     if @options.config.withGolds
       @cells.push(new XCard.BasicCell({
         className: 'row-golds-total',
-        textContent: rowTotalGolds.toString()
+        textContent: @forDisplay(rowTotalGolds)
       }))
 
     if @options.config.withX
       @cells.push(new XCard.BasicCell({
         className: 'row-x-total',
-        textContent: rowTotalX.toString()
+        textContent: @forDisplay(rowTotalX)
       }))
 
     #
@@ -58,11 +60,20 @@ class XCard.ScoringRowTotals
     #
     @cells.push(new XCard.BasicCell({
       className: 'row-running-total'
-      textContent: @options.totals.totalScore.toString()
+      textContent: @forDisplay(@options.totals.totalScore)
       }))
 
   cells: ()->
     @cells
+
+  ensureAtLeastOneScoringEnd: ()->
+    @scoringEnds.filter( (sc)->
+      sc.hasAtLeastOneScore()
+    ).length > 0
+
+  # Only display totals if at least one scoring end is registered
+  forDisplay: (v)->
+    if @displayTotals then v.toString() else ''
 
   getRowTotalGolds: ()->
     @scoringEnds.reduce((accum, se)->

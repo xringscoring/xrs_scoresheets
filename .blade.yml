@@ -13,6 +13,7 @@ logical_paths:
 build:
   logical_paths:
     - xcard.js
+    - xcard-data.js
     - xcard.css
   path: dist
   js_compressor: uglifier # Optional

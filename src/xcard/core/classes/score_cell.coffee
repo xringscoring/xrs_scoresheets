@@ -34,7 +34,7 @@ class XCard.ScoreCell extends XCard.BasicCell
 
   getTextContent: ()->
     if !@scoreValue?
-      return " " # non-breaking space
+      return "" # non-breaking space
 
     if @scoreValue == 0
       return 'm'

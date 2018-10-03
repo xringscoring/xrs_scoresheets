@@ -4,7 +4,10 @@ table.xcard, td {
 
 td {
   min-width: 15px;
+  height: 30px;
   padding: 5px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 td.end-total-cell {
@@ -21,4 +24,13 @@ td.row-total-score, .row-golds-total, .row-hits-total, .row-running-total {
 
 td.score-cell.unused {
   background-color: gray;
+}
+
+td.title-cell {
+  text-align: left;
+}
+
+tr.header-row td, tr.totals-row td {
+  text-transform: uppercase;
+  font-weight: bold;
 }
