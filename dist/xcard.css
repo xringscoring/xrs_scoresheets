@@ -16,9 +16,7 @@
 html, body {
   width: 100%;
   font-size: 1em;
-  letter-spacing: 0px;
-  color: white;
-  background-color: #0A0A0A; }
+  letter-spacing: 0px; }
 
 body {
   padding: 40px; }
@@ -30,6 +28,9 @@ table {
 
 table.xcard, td {
   border: 2px solid gray; }
+
+tbody {
+  align: right; }
 
 tbody::before {
   content: '';
@@ -44,17 +45,15 @@ td {
   vertical-align: middle; }
 
 td.end-total-cell {
-  background-color: blue;
-  color: white; }
+  background-color: #DDDDDD; }
 
-td.row-total-score, .row-golds-total, .row-hits-total, .row-x-total, .row-running-total {
-  background-color: green;
-  color: white;
+td.row-total-score, .row-golds-total, .row-hits-total, .row-x-total, .row-running-total, .row-points-total, .row-running-total-points {
+  background-color: #DDDDDD;
   padding: 5px 10px;
   font-weight: bold; }
 
-td.score-cell.unused {
-  background-color: gray; }
+td.unused {
+  background: repeating-linear-gradient(-45deg, #DDDDDD, #DDDDDD 5px, #BBBBBB 5px, #BBBBBB 10px); }
 
 td.title-cell {
   text-align: left; }

@@ -24,8 +24,11 @@ class XCard.ScoringEnd
     @options = Object.assign({
       cellCount: 3,
       scores: [],
+      points: 0,
       config: null
     }, options)
+
+    @endTotalCell = null
 
     unless @options.config?
       throw "ScoringEnd requires DistanceConfig"
@@ -34,7 +37,9 @@ class XCard.ScoringEnd
 
   build: () ->
     @buildScoringCells()
-    @buildEndTotalCell()
+
+    if @options.config.endsPerRow > 1
+      @buildEndTotalCell()
 
   buildScoringCells: () ->
     @scoringCells = []
@@ -51,7 +56,7 @@ class XCard.ScoringEnd
 
   cells: () ->
     ary = @scoringCells.slice(0)
-    ary.push( @endTotalCell )
+    ary.push( @endTotalCell ) if @endTotalCell?
     ary
 
   hasAtLeastOneScore: ()->
@@ -64,5 +69,17 @@ class XCard.ScoringEnd
       sc.score() > 0
     ).length
 
+  totalGolds: ()->
+    self = @
+    @scoringCells.reduce( (accum, sc)->
+      accum + if sc.score() is self.options.config.goldScore then 1 else 0
+    , 0)
+
   totalScore: ()->
-    @endTotalCell.totalScore()
+    @scoringCells.reduce( (accum, sc)->
+      accum += sc.score()
+      accum
+    , 0)
+
+  totalPoints: ()->
+    @options.points

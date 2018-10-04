@@ -18,9 +18,11 @@ QUnit.test "multi distance", (assert) ->
   assert.equal d.totalShots, 36, 'correct total shots'
   assert.equal d.title, '90m', 'correct title'
   assert.equal d.goldScore, 10, 'correct gold score'
+  assert.equal d.leftPaddingCellCount, 0, 'correct leftCellPadding'
 
   d = adapter.distances[2]
   assert.equal d.shotsPerEnd, 3, 'correct SPE'
   assert.equal d.totalShots, 36, 'correct total shots'
   assert.equal d.title, '50m', 'correct title'
   assert.equal d.goldScore, 10, 'correct gold score'
+  assert.equal d.leftPaddingCellCount, 6, 'correct leftCellPadding'

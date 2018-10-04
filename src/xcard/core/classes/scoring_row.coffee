@@ -8,9 +8,9 @@ class XCard.ScoringRow
 
   constructor: (options = {}, @endScoresData = []) ->
     @options = Object.assign({
-      cellCount: 3,
+      # cellCount: 3,
       element: 'tr',
-      endCount: 1,
+      # endCount: 1,
       config: null
       totals: null
     }, options)
@@ -18,17 +18,19 @@ class XCard.ScoringRow
     unless @options.config?
       throw "ScoringRow requires DistanceConfig"
 
+    @config = @options.config
     @buildScoringEnds()
     @buildTotalsBlock()
 
   buildScoringEnds: () ->
     @scoringEnds = []
-    for i in [1..@options.endCount]
+    for i in [1..@config.endsPerRow]
       scoreData = @endScoresData[i - 1] ? {}
       scoringEnd = new XCard.ScoringEnd({
-        config: @options.config,
-        cellCount: @options.cellCount,
-        scores: scoreData['shots'] ? []
+        config: @config,
+        cellCount: @config.cellsPerEnd,
+        scores: scoreData['shots'] ? [],
+        points: scoreData['matchPoints'] ? 0
       })
       @scoringEnds.push scoringEnd
 

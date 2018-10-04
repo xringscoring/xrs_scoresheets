@@ -15,30 +15,16 @@ class XCard.DistanceBlock
     @configureBlock()
 
   configureBlock: ()->
-    @numberOfEnds = @config.totalShots / @config.shotsPerEnd
-
-    @endsPerRow = @getEndsPerRow()
-    @cellsPerEnd = @getCellsPerEnd()
-
-    @rowCount = @numberOfEnds / @endsPerRow
-    @endTotalCells = @endsPerRow
-
-    @titleCellSpan = @getTitleCellSpan()
-
-    @chunkedEndsScoreData = XCard.chunkArray(@endsScoreData, @endsPerRow)
+    @chunkedEndsScoreData = XCard.chunkArray(@endsScoreData, @config.endsPerRow)
 
     @rows = [
       new XCard.DistanceHeaderRow({
-        config: @config,
-        title: @config.title,
-        titleCellSpan: @titleCellSpan
+        config: @config
       })
     ]
 
-    for r in [1..@rowCount]
+    for r in [1..@config.rowCount]
       @rows.push( new XCard.ScoringRow({
-        cellCount: @cellsPerEnd,
-        endCount: @endsPerRow,
         config: @config,
         totals: @totalizer
       }, @chunkedEndsScoreData[r - 1]))
@@ -46,23 +32,10 @@ class XCard.DistanceBlock
     @rows.push new XCard.DistanceTotalsRow({
       config: @config,
       totals: @totalizer,
-      cellSpan: @titleCellSpan
+      cellSpan: @config.titleCellSpan
     })
 
-  getCellsPerEnd: ()->
-    if @config.shotsPerEnd <= 3
-      return 3
-
-    if @config.shotsPerEnd <= 6
-      return 6
-
-    12
-
-  getEndsPerRow: ()->
-    return if @config.shotsPerEnd <= 6 then 2 else 1
-
-  getTitleCellSpan: ()->
-    (@endsPerRow * @cellsPerEnd) + @endTotalCells
+  #   (@endsPerRow * @cellsPerEnd) + @endTotalCells
 
   toHtml: ()->
     element = document.createElement(@options.element)

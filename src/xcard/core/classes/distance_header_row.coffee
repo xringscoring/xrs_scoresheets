@@ -3,29 +3,34 @@ class XCard.DistanceHeaderRow
   constructor: (options = {})->
     @options = Object.assign({
       config: null
-      title: '1',
-      titleCellSpan: 1
+      # title: '1',
+      # titleCellSpan: 1
     }, options)
 
     unless @options.config?
       throw "DistanceHeaderRow requires DistanceConfig"
 
+    @config = @options.config
+
     @cells = [
-      @getTitleCell(),
-      @getRowTotalCell()
+      @getTitleCell()
     ]
 
-    @cells.push @getRowPointsCell() if @options.config.withPoints
-    @cells.push @getRowHitsCell() if @options.config.withHits
-    @cells.push @getRowGoldsCell() if @options.config.withGolds
-    @cells.push @getRowXCell() if @options.config.withX
+    if @config.endsPerRow > 1
+      @cells.push @getRowTotalCell()
+
+    @cells.push @getRowHitsCell() if @config.withHits
+    @cells.push @getRowGoldsCell() if @config.withGolds
+    @cells.push @getRowXCell() if @config.withX
+    @cells.push @getRowPointsCell() if @config.withPoints
     @cells.push @getRunningTotalCell()
+    @cells.push @getRunningTotalPointsCell() if @config.withPoints
 
   getTitleCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      colSpan: @options.titleCellSpan,
-      textContent: @options.title,
+      colSpan: @config.titleCellSpan,
+      textContent: @config.title,
       className: "title-cell"
     })
     cell
@@ -83,6 +88,14 @@ class XCard.DistanceHeaderRow
     cell.setAttributes({
       textContent: @forDisplay('tot'),
       className: "running-total-cell"
+    })
+    cell
+
+  getRunningTotalPointsCell: ()->
+    cell = new XCard.BasicCell
+    cell.setAttributes({
+      textContent: @forDisplay('tot pt'),
+      className: "running-total-points-cell"
     })
     cell
 

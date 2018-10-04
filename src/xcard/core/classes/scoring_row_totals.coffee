@@ -28,39 +28,52 @@ class XCard.ScoringRowTotals
     rowTotalX = @getRowTotalX()
     @options.totals.totalX += rowTotalX
 
-    @cells = [
-      new XCard.BasicCell({
-        className: 'row-total-score',
+    if @options.withPoints
+      rowTotalPoints = @getRowTotalPoints()
+      @options.totals.totalPoints += rowTotalPoints
+
+    # TODO: wrap these in a single method
+    @cells = []
+
+    if @scoringEnds.length > 1
+      @cells.push(new XCard.BasicCell({
+        className: 'row-total-score row-totals',
         textContent: @forDisplay(rowTotalScore)
-        })
-    ]
+      }))
 
     if @options.config.withHits
       @cells.push(new XCard.BasicCell({
-        className: 'row-hits-total',
+        className: 'row-hits-total row-totals',
         textContent: @forDisplay(rowTotalHits)
       }))
 
-    # if @options.withPoints
-
     if @options.config.withGolds
       @cells.push(new XCard.BasicCell({
-        className: 'row-golds-total',
+        className: 'row-golds-total row-totals',
         textContent: @forDisplay(rowTotalGolds)
       }))
 
     if @options.config.withX
       @cells.push(new XCard.BasicCell({
-        className: 'row-x-total',
+        className: 'row-x-total row-totals',
         textContent: @forDisplay(rowTotalX)
       }))
 
-    #
-    # TODO: how to calculate running total dynamically
-    #
+    if @options.config.withPoints
+      @cells.push(new XCard.BasicCell({
+        className: 'row-points-total row-totals',
+        textContent: @forDisplay(rowTotalPoints)
+      }))
+
     @cells.push(new XCard.BasicCell({
-      className: 'row-running-total'
+      className: 'row-running-total row-totals'
       textContent: @forDisplay(@options.totals.totalScore)
+      }))
+
+    if @options.config.withPoints
+      @cells.push(new XCard.BasicCell({
+        className: 'row-running-total-points row-totals',
+        textContent: @forDisplay(@options.totals.totalPoints)
       }))
 
   cells: ()->
@@ -77,7 +90,7 @@ class XCard.ScoringRowTotals
 
   getRowTotalGolds: ()->
     @scoringEnds.reduce((accum, se)->
-      accum + se.endTotalCell.totalGolds()
+      accum + se.totalGolds()
     , 0)
 
   getRowTotalX: ()->
@@ -86,6 +99,11 @@ class XCard.ScoringRowTotals
   getRowTotalHits: ()->
     @scoringEnds.reduce((accum, se)->
       accum + se.totalHits()
+    , 0)
+
+  getRowTotalPoints: ()->
+    @scoringEnds.reduce((accum, se)->
+      accum + se.totalPoints()
     , 0)
 
   getRowTotalScore: ()->

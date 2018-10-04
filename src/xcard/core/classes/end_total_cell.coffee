@@ -7,7 +7,7 @@ class XCard.EndTotalCell extends XCard.BasicCell
     @scoringCells = @options.scoringCells ? []
 
     super({
-      className: 'end-total-cell',
+      className: 'end-total-cell row-totals',
       textContent: @textContent()
     })
 

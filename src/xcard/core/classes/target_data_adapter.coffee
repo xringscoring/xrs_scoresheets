@@ -6,15 +6,24 @@ class XCard.TargetDataAdapter
       throw 'Target Round definition is required'
 
     @parseRoundDefinition()
+    @ensureLeftPadding()
+
+  ensureLeftPadding: () ->
+    for distanceDef, i in @distances
+      @distances[i]['leftPaddingCellCount'] = (@maxShotsPerEnd - distanceDef['shotsPerEnd']) * 2
 
   parseRoundDefinition: () ->
     @distances = []
+    @maxShotsPerEnd = 0
     for d, i in @targetRoundDefinition.distances
-      @distances.push( @distanceDefinition(d, i) )
+      distanceDef = @distanceDefinition(d, i)
+      @distances.push distanceDef
+      @maxShotsPerEnd = if distanceDef['shotsPerEnd'] > @maxShotsPerEnd then distanceDef['shotsPerEnd'] else @maxShotsPerEnd
 
   distanceDefinition: (distanceDef, index) ->
+    distanceIndex: index,
     shotsPerEnd: @toNumber(distanceDef['shots_per_end'] ? @targetRoundDefinition['default_shots_per_end']),
-    title: @title(distanceDef['range']),
+    title: @title(distanceDef['range'], index),
     totalShots: @toNumber(distanceDef['total_shots']),
     withHits: true,
     withGolds: true,
@@ -22,7 +31,7 @@ class XCard.TargetDataAdapter
     withX: @withX(),
     recurveMatch: @isRecurveMatchRound(),
     compoundMatch: @isCompoundMatchRound(),
-    withTotalHeaders: index is 0
+    withTotalHeaders: @withTotalHeaders(index)
 
   isCompoundMatchRound: () ->
     return false unless @bowType is 'compound'
@@ -38,11 +47,18 @@ class XCard.TargetDataAdapter
   rangeUnit: () ->
     if @targetRoundDefinition['round_type'] is 'metric' then 'm' else 'yd'
 
-  title: (distance) ->
+  title: (distance, distanceIndex) ->
+    if @isMatchRound() and (distanceIndex > 0)
+      return "Tie-break"
+
     "#{distance}#{@rangeUnit()}"
 
   toNumber: (v) ->
     parseInt(v, 10)
+
+  withTotalHeaders: (index)->
+    # return true if index is 0
+    true
 
   withX: () ->
     @targetRoundDefinition['environment'] is 'outdoor' and @targetRoundDefinition['has_x']

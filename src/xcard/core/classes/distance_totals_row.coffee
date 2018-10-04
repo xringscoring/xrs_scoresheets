@@ -3,13 +3,15 @@ class XCard.DistanceTotalsRow
   constructor: (options = {})->
     @options = Object.assign({
       config: null,
-      title: '1',
-      cellSpan: 1
+      # title: '1',
+      # cellSpan: 1
       totals: null
     }, options)
 
     unless @options.config?
       throw "DistanceTotalsRow requires DistanceConfig"
+
+    @config = @options.config
 
     @cells = [
       @getSpacerCell(),
@@ -18,12 +20,14 @@ class XCard.DistanceTotalsRow
     @cells.push @getRowHitsCell() if @options.config.withHits
     @cells.push @getRowGoldsCell() if @options.config.withGolds
     @cells.push @getRowXCell() if @options.config.withX
+    @cells.push @getRowPointsCell() if @options.config.withPoints
     @cells.push @getRunningTotalCell()
+    @cells.push @getRunningTotalPointsCell() if @options.config.withPoints
 
   getSpacerCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      colSpan: @options.cellSpan + 1,
+      colSpan: @config.titleCellSpan + (if @config.endsPerRow > 1 then 1 else 0),
       textContent: '',
       className: 'totals-spacer'
     })
@@ -40,7 +44,7 @@ class XCard.DistanceTotalsRow
   getRowGoldsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalGolds.toString(),
+      textContent: @forDisplay(@options.totals.totalGolds.toString()),
       className: "total-golds-cell"
     })
     cell
@@ -56,7 +60,7 @@ class XCard.DistanceTotalsRow
   getRowHitsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalHits.toString(),
+      textContent: @forDisplay(@options.totals.totalHits.toString()),
       className: "total-hits-cell"
     })
     cell
@@ -64,7 +68,7 @@ class XCard.DistanceTotalsRow
   getRowPointsCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalPoints.toString(),
+      textContent: @forDisplay(@options.totals.totalPoints.toString()),
       className: "total-points-cell"
     })
     cell
@@ -72,7 +76,7 @@ class XCard.DistanceTotalsRow
   getRowXCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalX.toString(),
+      textContent: @forDisplay(@options.totals.totalX.toString()),
       className: "total-x-cell"
     })
     cell
@@ -80,10 +84,22 @@ class XCard.DistanceTotalsRow
   getRunningTotalCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      textContent: @options.totals.totalScore.toString(),
+      textContent: @forDisplay(@options.totals.totalScore.toString()),
       className: "total-score-cell"
     })
     cell
+
+  getRunningTotalPointsCell: ()->
+    cell = new XCard.BasicCell
+    cell.setAttributes({
+      textContent: @forDisplay(@options.totals.totalPoints.toString()),
+      className: "total-points-cell"
+    })
+    cell
+
+  forDisplay: (v)->
+    return '' unless @options.totals.totalScore > 0
+    v
 
   # Refactor: already in BasicElement
   toHtmlString: ()->

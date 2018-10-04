@@ -3,7 +3,7 @@ QUnit.test "without scoring", (assert)->
   tRound = new XCard.TargetDataAdapter(getTargetRound('fita_70'), 'recurve')
   config = new XCard.DistanceConfig(tRound.distances[0])
   block = new XCard.DistanceBlock(config: config)
-  assert.equal block.rowCount, 6, 'row count correct'
+  assert.equal block.config.rowCount, 6, 'row count correct'
 
 
 QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert)->
@@ -17,9 +17,9 @@ QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert
   })
 
   assert.equal(block.config.shotsPerEnd, 6, 'shots per end')
-  assert.equal(block.endsPerRow, 2, 'ends per row')
-  assert.equal(block.rowCount, 3, 'row count is correct')
-  assert.equal(block.titleCellSpan, 14, 'title cellspan')
+  assert.equal(block.config.endsPerRow, 2, 'ends per row')
+  assert.equal(block.config.rowCount, 3, 'row count is correct')
+  assert.equal(block.config.titleCellSpan, 14, 'title cellspan')
 
 
 QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
@@ -80,9 +80,9 @@ QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
 
   assert.equal(block.config.withGolds, true, 'with golds')
   assert.equal(block.config.withPoints, false, 'points not shown')
-  assert.equal(block.endsPerRow, 2, 'ends per row')
-  assert.equal(block.rowCount, 10, 'row count')
-  assert.equal(block.titleCellSpan, 8, 'title cell span')
+  assert.equal(block.config.endsPerRow, 2, 'ends per row')
+  assert.equal(block.config.rowCount, 10, 'row count')
+  assert.equal(block.config.titleCellSpan, 8, 'title cell span')
   assert.equal(block.rows[0].constructor.name, 'DistanceHeaderRow', 'constructor name correct')
 
   assert.equal(block.chunkedEndsScoreData[0].length, 2)
