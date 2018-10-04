@@ -1,7 +1,7 @@
 $dark: #0A0A0A;
 $white: white;
-$dark-gray: #BBBBBB;
-$light-gray: #DDDDDD;
+$dark-gray: #C0C0C0;
+$light-gray: #F8F8F8;
 
 @mixin striper($color) {
   background: repeating-linear-gradient(
@@ -26,7 +26,6 @@ $body-color: $dark;
   -webkit-text-size-adjust:none;
   outline: none;
   font-family: "Helvetica Neue", sans-serif;
-  text-transform: uppercase;
 }
 
 *, *:after, *:before {
@@ -48,14 +47,27 @@ body {
   padding: 40px;
 }
 
+h2 {
+  margin-top: 40px;
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+ul {
+  margin-top: 30px;
+  font-size: 0.7em;
+  list-style-type: none;
+}
+
 table {
   margin: 30px;
   border-spacing: 0;
   border-collapse: collapse;
+  text-transform: uppercase;
 }
 
 table.xcard, td {
-    border: 2px solid gray;
+    border: 2px solid $dark-gray;
 }
 
 tbody {
@@ -109,5 +121,7 @@ tr.totals-row td.totals-spacer {
 // PRINT
 //
 @media print {
-
+  select {
+    display: none;
+  }
 }

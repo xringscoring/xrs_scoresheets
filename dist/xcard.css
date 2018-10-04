@@ -5,8 +5,7 @@
   -webkit-user-select: none;
   -webkit-text-size-adjust: none;
   outline: none;
-  font-family: "Helvetica Neue", sans-serif;
-  text-transform: uppercase; }
+  font-family: "Helvetica Neue", sans-serif; }
 
 *, *:after, *:before {
   -webkit-box-sizing: border-box;
@@ -21,13 +20,24 @@ html, body {
 body {
   padding: 40px; }
 
+h2 {
+  margin-top: 40px;
+  font-size: 1.2em;
+  font-weight: normal; }
+
+ul {
+  margin-top: 30px;
+  font-size: 0.7em;
+  list-style-type: none; }
+
 table {
   margin: 30px;
   border-spacing: 0;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  text-transform: uppercase; }
 
 table.xcard, td {
-  border: 2px solid gray; }
+  border: 2px solid #C0C0C0; }
 
 tbody {
   align: right; }
@@ -45,15 +55,15 @@ td {
   vertical-align: middle; }
 
 td.end-total-cell {
-  background-color: #DDDDDD; }
+  background-color: #F8F8F8; }
 
 td.row-total-score, .row-golds-total, .row-hits-total, .row-x-total, .row-running-total, .row-points-total, .row-running-total-points {
-  background-color: #DDDDDD;
+  background-color: #F8F8F8;
   padding: 5px 10px;
   font-weight: bold; }
 
 td.unused {
-  background: repeating-linear-gradient(-45deg, #DDDDDD, #DDDDDD 5px, #BBBBBB 5px, #BBBBBB 10px); }
+  background: repeating-linear-gradient(-45deg, #F8F8F8, #F8F8F8 5px, #C0C0C0 5px, #C0C0C0 10px); }
 
 td.title-cell {
   text-align: left; }
@@ -64,3 +74,7 @@ tr.header-row td, tr.totals-row td {
 
 tr.totals-row td.totals-spacer {
   border: none; }
+
+@media print {
+  select {
+    display: none; } }

@@ -5,9 +5,7 @@ QUnit.test "HeaderRow builds correctly for general shoot", (assert)->
     titleCellSpan: 8
   })
   headerRow = new XCard.DistanceHeaderRow({
-    config: config,
-    # title: '80yd',
-    # titleCellSpan: 8
+    config: config
   })
 
   result = "<tr class=\"header-row\"><td class=\"title-cell\" colspan=\"8\">80yd</td><td class=\"row-total-cell\">rt</td><td class=\"row-hits-cell\">h</td><td class=\"row-golds-cell\">g</td><td class=\"running-total-cell\">tot</td></tr>"
