@@ -7,12 +7,6 @@ XCard.extend
     element.outerHTML
 
   makeElement: (tagName, options = {}) ->
-    # if typeof tagName is "object"
-    #   options = tagName
-    #   {tagName} = options
-    # else
-    #   options = attributes: options
-
     element = document.createElement(tagName)
 
     if options.attributes
@@ -37,5 +31,5 @@ XCard.extend
     # Table-specific
     if options.colSpan
       element.setAttribute('colspan', options.colSpan)
-      
+
     element

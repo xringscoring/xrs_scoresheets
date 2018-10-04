@@ -28,10 +28,14 @@ class XCard.TargetDataAdapter
     withHits: true,
     withGolds: true,
     goldScore: @toNumber(@targetRoundDefinition['scoring_scheme'][0]),
+    goldsDescriptor: @goldsDescriptor(),
     withX: @withX(),
     recurveMatch: @isRecurveMatchRound(),
     compoundMatch: @isCompoundMatchRound(),
     withTotalHeaders: @withTotalHeaders(index)
+
+  goldsDescriptor: ()->
+    if @targetRoundDefinition['short_name'].match(/worcester|nfaa_300/i) then 'w' else 'g'
 
   isCompoundMatchRound: () ->
     return false unless @bowType is 'compound'
@@ -57,7 +61,6 @@ class XCard.TargetDataAdapter
     parseInt(v, 10)
 
   withTotalHeaders: (index)->
-    # return true if index is 0
     true
 
   withX: () ->

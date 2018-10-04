@@ -1,10 +1,10 @@
 class XCard.DistanceTotalsRow
 
+  {displayCell} = XCard
+
   constructor: (options = {})->
     @options = Object.assign({
       config: null,
-      # title: '1',
-      # cellSpan: 1
       totals: null
     }, options)
 
@@ -33,77 +33,30 @@ class XCard.DistanceTotalsRow
     })
     cell
 
-  getEndTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      # textContent: "et",
-      className: "end-total-cell"
-    })
-    cell
-
   getRowGoldsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalGolds.toString()),
-      className: "total-golds-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalGolds.toString()), 'total-golds-cell')
 
   getRowTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: "rt",
-      className: "row-total-cell"
-    })
-    cell
+    displayCell('rt', 'row-total-cell')
 
   getRowHitsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalHits.toString()),
-      className: "total-hits-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalHits.toString()), 'total-hits-cell')
 
   getRowPointsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalPoints.toString()),
-      className: "total-points-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalPoints.toString()), 'total-points-cell')
 
   getRowXCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalX.toString()),
-      className: "total-x-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalX.toString()), 'total-x-cell')
 
   getRunningTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalScore.toString()),
-      className: "total-score-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalScore.toString()), 'total-score-cell')
 
   getRunningTotalPointsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay(@options.totals.totalPoints.toString()),
-      className: "total-points-cell"
-    })
-    cell
+    displayCell(@forDisplay(@options.totals.totalPoints.toString()), 'total-points-cell')
 
   forDisplay: (v)->
     return '' unless @options.totals.totalScore > 0
     v
-
-  # Refactor: already in BasicElement
-  toHtmlString: ()->
-    @toHtml().outerHTML
 
   toHtml: ()->
     element = new XCard.BasicElement({ className: 'totals-row' }, 'tr').toHtml()

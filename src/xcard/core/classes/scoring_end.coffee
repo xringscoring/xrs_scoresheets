@@ -52,6 +52,8 @@ class XCard.ScoringEnd
     @endTotalCell = new XCard.EndTotalCell({
       config: @options.config
       scoringCells: @scoringCells
+      totalScore: @totalScore()
+      hasAtLeastOneScore: @hasAtLeastOneScore()
     })
 
   cells: () ->

@@ -1,10 +1,10 @@
 class XCard.DistanceHeaderRow
 
+  {displayCell} = XCard
+
   constructor: (options = {})->
     @options = Object.assign({
       config: null
-      # title: '1',
-      # titleCellSpan: 1
     }, options)
 
     unless @options.config?
@@ -12,97 +12,48 @@ class XCard.DistanceHeaderRow
 
     @config = @options.config
 
+    @totalsFunctionMap =
+      'h': [ 'getRowHitsCell', @config.withHits ],
+      'g': [ 'getRowGoldsCell', @config.withGolds ],
+      'x': [ 'getRowXCell', @config.withX ],
+      'p': [ 'getRowPointsCell', @config.withPoints ],
+      't': [ 'getRowTotalCell', @config.endsPerRow > 1 ],
+      'rt': [ 'getRunningTotalCell', true ]
+      'tp': [ 'getRunningTotalPointsCell', @config.withPoints ]
+
     @cells = [
-      @getTitleCell()
+      displayCell(@config.title, "title-cell", { colSpan: @config.titleCellSpan })
     ]
 
-    if @config.endsPerRow > 1
-      @cells.push @getRowTotalCell()
-
-    @cells.push @getRowHitsCell() if @config.withHits
-    @cells.push @getRowGoldsCell() if @config.withGolds
-    @cells.push @getRowXCell() if @config.withX
-    @cells.push @getRowPointsCell() if @config.withPoints
-    @cells.push @getRunningTotalCell()
-    @cells.push @getRunningTotalPointsCell() if @config.withPoints
-
-  getTitleCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      colSpan: @config.titleCellSpan,
-      textContent: @config.title,
-      className: "title-cell"
-    })
-    cell
-
-  getEndTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      # textContent: "et",
-      className: "end-total-cell"
-    })
-    cell
+    for totalsItem in @config.totalsOrder
+      f = @totalsFunctionMap[totalsItem]
+      if f[1]
+        @cells.push @[f[0]]()
 
   getRowGoldsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay("g"),
-      className: "row-golds-cell"
-    })
-    cell
+    displayCell(@forDisplay(@config.goldsDescriptor), "row-golds-cell")
 
   getRowTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay("rt"),
-      className: "row-total-cell"
-    })
-    cell
+    displayCell(@forDisplay("rt"), "row-total-cell")
 
   getRowHitsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay('h'),
-      className: "row-hits-cell"
-    })
-    cell
+    displayCell(@forDisplay('h'), "row-hits-cell")
 
   getRowPointsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay('pt'),
-      className: "row-points-cell"
-    })
-    cell
+    displayCell(@forDisplay('pt'), "row-points-cell")
 
   getRowXCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay('x'),
-      className: "row-x-cell"
-    })
-    cell
+    displayCell(@forDisplay('x'), "row-x-cell")
 
   getRunningTotalCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay('tot'),
-      className: "running-total-cell"
-    })
-    cell
+    displayCell(@forDisplay('tot'), "running-total-cell")
 
   getRunningTotalPointsCell: ()->
-    cell = new XCard.BasicCell
-    cell.setAttributes({
-      textContent: @forDisplay('tot pt'),
-      className: "running-total-points-cell"
-    })
-    cell
+    displayCell(@forDisplay('tot pt'), "running-total-points-cell")
 
   forDisplay: (v)->
     if @options.config.withTotalHeaders then v else ''
 
-  # Refactor: already in BasicElement
   toHtmlString: ()->
     @toHtml().outerHTML
 

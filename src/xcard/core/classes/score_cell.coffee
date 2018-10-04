@@ -15,8 +15,6 @@ class XCard.ScoreCell extends XCard.BasicCell
   constructor: (@scoreData = {}, @unused = false)->
     super()
     @scoreValue = if @scoreData.score? then parseInt(@scoreData.score, 10) else null
-    @isX = @scoreData.isX ? false
-    @isGold = @scoreData.isGold ? false
     @text = @scoreData.text
 
     @setAttributes({

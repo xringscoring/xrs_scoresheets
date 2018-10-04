@@ -35,8 +35,6 @@ class XCard.DistanceBlock
       cellSpan: @config.titleCellSpan
     })
 
-  #   (@endsPerRow * @cellsPerEnd) + @endTotalCells
-
   toHtml: ()->
     element = document.createElement(@options.element)
 

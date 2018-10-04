@@ -1,5 +1,7 @@
 class XCard.ScoringRowTotals
 
+  {displayCell} = XCard
+
   constructor: (options = {})->
     @options = Object.assign({
       config: null
@@ -10,78 +12,73 @@ class XCard.ScoringRowTotals
     unless @options.config?
       throw "ScoringRow totals requires DistanceConfig"
 
+    @config = @options.config
     @scoringEnds = @options.scoringEnds
     @displayTotals = @ensureAtLeastOneScoringEnd()
+
+    @totalsFunctionMap =
+      'h': [ 'getRowHitsCell', @config.withHits ],
+      'g': [ 'getRowGoldsCell', @config.withGolds ],
+      'x': [ 'getRowXCell', @config.withX ],
+      'p': [ 'getRowPointsCell', @config.withPoints ],
+      't': [ 'getRowTotalCell', @scoringEnds.length > 1 ],
+      'rt': [ 'getRunningTotalCell', true ]
+      'tp': [ 'getRunningTotalPointsCell', @config.withPoints ]
 
     @buildTotals()
 
   buildTotals: ()->
-    rowTotalScore = @getRowTotalScore()
-    @options.totals.totalScore += rowTotalScore
+    @rowTotalScore = @getRowTotalScore()
+    @options.totals.totalScore += @rowTotalScore
 
-    rowTotalHits = @getRowTotalHits()
-    @options.totals.totalHits += rowTotalHits
+    @rowTotalHits = @getRowTotalHits()
+    @options.totals.totalHits += @rowTotalHits
 
-    rowTotalGolds = @getRowTotalGolds()
-    @options.totals.totalGolds += rowTotalGolds
+    @rowTotalGolds = @getRowTotalGolds()
+    @options.totals.totalGolds += @rowTotalGolds
 
-    rowTotalX = @getRowTotalX()
-    @options.totals.totalX += rowTotalX
+    @rowTotalX = @getRowTotalX()
+    @options.totals.totalX += @rowTotalX
 
     if @options.withPoints
-      rowTotalPoints = @getRowTotalPoints()
-      @options.totals.totalPoints += rowTotalPoints
+      @rowTotalPoints = @getRowTotalPoints()
+      @options.totals.totalPoints += @rowTotalPoints
 
     # TODO: wrap these in a single method
     @cells = []
 
-    if @scoringEnds.length > 1
-      @cells.push(new XCard.BasicCell({
-        className: 'row-total-score row-totals',
-        textContent: @forDisplay(rowTotalScore)
-      }))
+    for totalsItem in @config.totalsOrder
+      f = @totalsFunctionMap[totalsItem]
+      if f[1]
+        @cells.push @[f[0]]()
 
-    if @options.config.withHits
-      @cells.push(new XCard.BasicCell({
-        className: 'row-hits-total row-totals',
-        textContent: @forDisplay(rowTotalHits)
-      }))
+  getRowTotalCell: ()->
+    displayCell(@forDisplay(@rowTotalScore), 'row-total-score row-totals')
 
-    if @options.config.withGolds
-      @cells.push(new XCard.BasicCell({
-        className: 'row-golds-total row-totals',
-        textContent: @forDisplay(rowTotalGolds)
-      }))
+  getRowHitsCell: ()->
+    displayCell(@forDisplay(@rowTotalHits), 'row-hits-total row-totals')
 
-    if @options.config.withX
-      @cells.push(new XCard.BasicCell({
-        className: 'row-x-total row-totals',
-        textContent: @forDisplay(rowTotalX)
-      }))
+  getRowGoldsCell: ()->
+    displayCell(@forDisplay(@rowTotalGolds), 'row-golds-total row-totals')
 
-    if @options.config.withPoints
-      @cells.push(new XCard.BasicCell({
-        className: 'row-points-total row-totals',
-        textContent: @forDisplay(rowTotalPoints)
-      }))
+  getRowXCell: ()->
+    displayCell(@forDisplay(@rowTotalX), 'row-x-total row-totals')
 
-    @cells.push(new XCard.BasicCell({
-      className: 'row-running-total row-totals'
-      textContent: @forDisplay(@options.totals.totalScore)
-      }))
+  getRowPointsCell: ()->
+    displayCell(@forDisplay(@rowTotalPoints), 'row-points-total row-totals')
 
-    if @options.config.withPoints
-      @cells.push(new XCard.BasicCell({
-        className: 'row-running-total-points row-totals',
-        textContent: @forDisplay(@options.totals.totalPoints)
-      }))
+  getRunningTotalCell: ()->
+    displayCell(@forDisplay(@options.totals.totalScore), 'row-running-total row-totals')
+
+  getRunningTotalPointsCell: ()->
+    displayCell(@forDisplay(@options.totals.totalPoints), 'row-running-total-points row-totals')
 
   cells: ()->
     @cells
 
   ensureAtLeastOneScoringEnd: ()->
-    @scoringEnds.filter( (sc)->
-      sc.hasAtLeastOneScore()
+    @scoringEnds.filter( (se)->
+      se.hasAtLeastOneScore()
     ).length > 0
 
   # Only display totals if at least one scoring end is registered

@@ -1,6 +1,5 @@
 #= require xcard/core/classes/distance_block
 #= require xcard/core/classes/basic_element
-#= require xcard/core/classes/basic_distance_row
 #= require xcard/core/classes/basic_cell
 #= require xcard/core/classes/distance_config
 #= require xcard/core/classes/distance_header_row

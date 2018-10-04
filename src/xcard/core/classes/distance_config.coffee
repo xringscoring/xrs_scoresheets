@@ -9,6 +9,7 @@ class XCard.DistanceConfig
       withHits: true,
       withGolds: true,
       goldScore: 10,
+      goldsDescriptor: 'g',
       withX: true,
       recurveMatch: false,
       compoundMatch: false,
@@ -24,18 +25,18 @@ class XCard.DistanceConfig
     @withX = @options.withX
     @withGolds = @options.withGolds
     @goldScore = @options.goldScore
+    @goldsDescriptor = @options.goldsDescriptor
     @withPoints = @showPoints()
     @withHits = @showHits()
+
     @withTotalHeaders = @options.withTotalHeaders
+    @totalsOrder = [ 't', 'h', 'g', 'x', 'rt', 'p', 'tp']
 
     @numberOfEnds = @totalShots / @shotsPerEnd
     @endsPerRow = @getEndsPerRow()
-
     @rowCount = @getRowCount()
-
     @cellsPerEnd = @getCellsPerEnd()
     @endTotalCells = if @endsPerRow is 1 then 0 else @endsPerRow
-
 
     @titleCellSpan = @options.titleCellSpan ? @getTitleCellSpan()
 
@@ -44,6 +45,9 @@ class XCard.DistanceConfig
 
     if @shotsPerEnd <= 3
       return 3
+
+    if @shotsPerEnd is 5
+      return 5
 
     if @shotsPerEnd <= 6
       return 6

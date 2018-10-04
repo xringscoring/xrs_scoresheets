@@ -36,7 +36,7 @@ class XCard.ScoringRow
 
   buildTotalsBlock: () ->
     @totalsBlock = new XCard.ScoringRowTotals({
-      config: @options.config,
+      config: @config,
       scoringEnds: @scoringEnds,
       totals: @options.totals
     })

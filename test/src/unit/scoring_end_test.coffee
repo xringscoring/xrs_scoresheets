@@ -32,7 +32,7 @@ QUnit.test "ScoringEnd builds correctly for 3 SPE", (assert)->
 
   assert.equal(cells.length, 4)
   assert.equal(cells[3].constructor.name, 'EndTotalCell')
-  assert.equal(cells[3].totalScore(), 27)
+  assert.equal(cells[3].totalScore, 27)
   assert.equal(cells[3].textContent(), '27')
   assert.ok(scoringEnd.hasAtLeastOneScore(), 'At least one score registered')
 
@@ -66,7 +66,7 @@ QUnit.test "ScoringEnd builds correctly for 3 SPE with only 2 scores", (assert)-
   assert.equal(cells.length, 4)
   assert.equal(cells[3].constructor.name, 'EndTotalCell')
   assert.equal(scoringEnd.totalScore(), 17)
-  assert.equal(cells[3].textContent(), '')
+  assert.equal(cells[3].textContent(), '17')
 
 #
 # A la Worcester
