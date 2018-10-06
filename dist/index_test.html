@@ -2,8 +2,9 @@
   <head>
     <title>Scorecard Test</title>
     <link rel="stylesheet" type="text/css" href="xcard.css">
+    <script type="text/javascript" src="xcard-data-public.js"></script>
     <script type="text/javascript" src="xcard.js"></script>
-    <script type="text/javascript" src="xcard-data.js"></script>
+    <script type="text/javascript" src="xcard-example.js"></script>
   </head>
 
   <body>
@@ -16,91 +17,45 @@
       <option value="compound">Compound</option>
     </select>
 
-    <h2 id="date">Date ...... / ...... / ..........</h2>
+    <div id="hiddenBlock">
 
-    <h2 id="event">Event .................................................................................</h2>
+      <h2>Date ...... / ...... / ..........</h2>
 
-    <table id="xcard-table">
-      <thead></thead>
+      <h2>Event .................................................................................</h2>
 
-      <tbody></tbody>
+      <table id="xcard-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
 
+      <h2>Archer's Signature ............................................................</h2>
 
-    </table>
+      <h2>Scorer's Signature ............................................................</h2>
 
-    <h2 id="archers-name">Archer's Signature ............................................................</h2>
+      <ul>
+        <li>S = Row summary score</li>
+        <li>H = Hits</li>
+        <li>G = Golds + X (or maximum score)</li>
+        <li>W = Whites (specific rounds)</li>
+        <li>X = X's (outdoor rounds only)</li>
+        <li>P = Points (match rounds only)</li>
+        <li>TOT = Running total score</li>
+        <li>TOT PT = Running total points (match rounds only)</li>
+      </ul>
 
-    <h2 id="archers-name">Scorer's Signature ............................................................</h2>
-
-    <ul>
-      <li>S = Row summary score</li>
-      <li>H = Hits</li>
-      <li>G = Golds + X (or maximum score)</li>
-      <li>W = Whites (specific rounds)</li>
-      <li>X = X's (outdoor rounds only)</li>
-      <li>P = Points (match rounds only)</li>
-      <li>TOT = Running total score</li>
-      <li>TOT PT = Running total points (match rounds only)</li>
-    </ul>
-
-    <div id="logo">
-      <div id="logotype_tensor">
-        <svg class="tensor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="100%" width="100%" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" style="fill: none;"/>
-          <line x1="60" y1="60" x2="140" y2="140">
-          </line>
-          <line x1="60" y1="140" x2="140" y2="60">
-          </line>
-        </svg>
+      <div id="logo">
+        <div id="logotype_tensor">
+          <svg class="tensor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="100%" width="100%" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="80" style="fill: none;"/>
+            <line x1="60" y1="60" x2="140" y2="140">
+            </line>
+            <line x1="60" y1="140" x2="140" y2="60">
+            </line>
+          </svg>
+        </div>
+        <span>xringscoring</span>
       </div>
-      <span>xringscoring</span>
+
     </div>
-
-
-  <script type="text/javascript">
-    var mappedRounds = window.TARGET_ROUNDS.reduce(function(m, tR) {
-      m[tR['short_name']] = tR
-      return m;
-    }, {});
-
-    var selector = document.getElementById('chooseRound');
-    for (var i in window.TARGET_ROUNDS) {
-      var tRound = window.TARGET_ROUNDS[i];
-      var option = document.createElement("option");
-      option.value = tRound['short_name'];
-      option.text = tRound['name'];
-      selector.appendChild(option);
-    }
-
-    var buildTable = function(newRound, bowType) {
-      html = "<thead></thead>"
-
-      var tData = mappedRounds[newRound]
-      var tRound = new XCard.TargetDataAdapter(tData, bowType);
-
-      for (var i in tRound.distances) {
-        var config = new XCard.DistanceConfig(tRound.distances[i]);
-        var block = new XCard.DistanceBlock({config: config});
-        html = html + block.toHtml().outerHTML;
-      }
-
-      var table = document.getElementById('xcard-table');
-      table.innerHTML = html;
-    };
-
-    document.getElementById("chooseRound").addEventListener('change', function(event) {
-      var newRound = event.target.value
-      var bowType = document.getElementById('bowType').value
-      if (newRound != '') {
-        buildTable(newRound, bowType);
-      }
-    });
-
-    document.getElementById("bowType").addEventListener('change', function(event) {
-      var bowType = event.target.value
-      var newRound = document.getElementById('chooseRound').value
-      buildTable(newRound, bowType);
-    });
-  </script>
 
 </html>

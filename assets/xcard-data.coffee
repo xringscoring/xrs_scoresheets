@@ -1,1 +1,1 @@
-//= require xcard/data/target_rounds
+//= require xcard/data/target_rounds_full

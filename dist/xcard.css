@@ -20,6 +20,9 @@ html, body {
 body {
   padding: 40px; }
 
+div#hiddenBlock {
+  display: none; }
+
 div#logo {
   margin-top: 20px; }
   div#logo div#logotype_tensor {

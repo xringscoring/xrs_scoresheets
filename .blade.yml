@@ -4,16 +4,18 @@ load_paths:
   - assets
   - src
 
-
 logical_paths:
   - xcard.js
+  - xcard-example.js
   - test.js
   - xcard.css
 
 build:
   logical_paths:
     - xcard.js
+    - xcard-example.js
     - xcard-data.js
+    - xcard-data-public.js
     - xcard.css
   path: dist
   js_compressor: uglifier # Optional
