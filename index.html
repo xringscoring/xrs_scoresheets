@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Scorecard Test</title>
+    <link rel="stylesheet" type="text/css" href="dist/xcard.css">
+    <script type="text/javascript" src="dist/xcard-data-public.js"></script>
+    <script type="text/javascript" src="dist/xcard.js"></script>
+    <script type="text/javascript" src="dist/xcard-example.js"></script>
+  </head>
+
+  <body>
+    <select id="chooseRound">
+      <option>Choose Round</option>
+    </select>
+
+    <select id="bowType">
+      <option value="recurve">Default Bow Type</option>
+      <option value="compound">Compound</option>
+    </select>
+
+    <div id="hiddenBlock">
+
+      <h2>Date ...... / ...... / ..........</h2>
+
+      <h2>Event .................................................................................</h2>
+
+      <table id="xcard-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>Archer's Signature ............................................................</h2>
+
+      <h2>Scorer's Signature ............................................................</h2>
+
+      <ul>
+        <li>S = Row summary score</li>
+        <li>H = Hits</li>
+        <li>G = Golds + X (or maximum score)</li>
+        <li>W = Whites (specific rounds)</li>
+        <li>X = X's (outdoor rounds only)</li>
+        <li>P = Points (match rounds only)</li>
+        <li>TOT = Running total score</li>
+        <li>TOT PT = Running total points (match rounds only)</li>
+      </ul>
+
+      <div id="logo">
+        <div id="logotype_tensor">
+          <svg class="tensor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="100%" width="100%" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="80" style="fill: none;"/>
+            <line x1="60" y1="60" x2="140" y2="140">
+            </line>
+            <line x1="60" y1="140" x2="140" y2="60">
+            </line>
+          </svg>
+        </div>
+        <span>xringscoring</span>
+      </div>
+
+    </div>
+
+</html>
