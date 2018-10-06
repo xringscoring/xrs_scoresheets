@@ -2,7 +2,7 @@
 // PRINT
 //
 @media print {
-  select {
+  .no-print {
     display: none;
   }
 }

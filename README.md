@@ -2,13 +2,13 @@
 
 Dynamically-generated scoresheets for various GNAS and WA Archery competition rounds.
 
-See the examples here: [https://xringscoring.github.io/svg_target_faces/](https://xringscoring.github.io/svg_target_faces/)
-
+Test site: https://xringscoring.github.io/xrs_scoresheets/
 
 ## Usage
 
-  To be decided
+  Select a target round and bow type to generate the relevant scoresheet.
 
+  Print using the browser print menu, scaling the output appropriately.
 
 ## License
 

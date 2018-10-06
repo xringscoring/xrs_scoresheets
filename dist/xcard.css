@@ -34,6 +34,9 @@ div#logo {
   div#logo span {
     color: #C0C0C0; }
 
+select {
+  margin-top: 20px; }
+
 h2 {
   margin-top: 40px;
   font-size: 1em;
@@ -97,5 +100,5 @@ svg.tensor circle, svg.tensor line {
   stroke-width: 16; }
 
 @media print {
-  select {
+  .no-print {
     display: none; } }
