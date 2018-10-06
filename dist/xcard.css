@@ -20,18 +20,32 @@ html, body {
 body {
   padding: 40px; }
 
+div#logo {
+  margin-top: 20px; }
+  div#logo div#logotype_tensor {
+    height: 20px;
+    width: 20px;
+    float: left;
+    display: inline-block;
+    margin: 0; }
+  div#logo span {
+    color: #C0C0C0; }
+
 h2 {
   margin-top: 40px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: normal; }
 
 ul {
   margin-top: 30px;
   font-size: 0.7em;
   list-style-type: none; }
+  ul li {
+    margin-top: 3px; }
 
 table {
   margin: 30px;
+  margin-left: 0;
   border-spacing: 0;
   border-collapse: collapse;
   text-transform: uppercase; }
@@ -74,6 +88,10 @@ tr.header-row td, tr.totals-row td {
 
 tr.totals-row td.totals-spacer {
   border: none; }
+
+svg.tensor circle, svg.tensor line {
+  stroke: #C0C0C0;
+  stroke-width: 16; }
 
 @media print {
   select {

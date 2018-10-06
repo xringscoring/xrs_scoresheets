@@ -21,10 +21,8 @@ class XCard.DistanceHeaderRow
       'rt': [ 'getRunningTotalCell', true ]
       'tp': [ 'getRunningTotalPointsCell', @config.withPoints ]
 
-    @cells = [
-      displayCell(@config.title, "title-cell", { colSpan: @config.titleCellSpan })
-    ]
-
+    @cells = new XCard.DistanceTitleCells({config: @config}).cells
+    
     for totalsItem in @config.totalsOrder
       f = @totalsFunctionMap[totalsItem]
       if f[1]
@@ -34,7 +32,7 @@ class XCard.DistanceHeaderRow
     displayCell(@forDisplay(@config.goldsDescriptor), "row-golds-cell")
 
   getRowTotalCell: ()->
-    displayCell(@forDisplay("rt"), "row-total-cell")
+    displayCell(@forDisplay("s"), "row-total-cell")
 
   getRowHitsCell: ()->
     displayCell(@forDisplay('h'), "row-hits-cell")

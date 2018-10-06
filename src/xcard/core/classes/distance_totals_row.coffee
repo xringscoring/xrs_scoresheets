@@ -24,10 +24,16 @@ class XCard.DistanceTotalsRow
     @cells.push @getRunningTotalCell()
     @cells.push @getRunningTotalPointsCell() if @options.config.withPoints
 
+  getCellSpan: () ->
+    if @config.endsPerRow is 1
+      return @config.cellsPerEnd
+
+    (@config.endsPerRow * @config.cellsPerEnd) + (@config.endsPerRow + 1)
+
   getSpacerCell: ()->
     cell = new XCard.BasicCell
     cell.setAttributes({
-      colSpan: @config.titleCellSpan + (if @config.endsPerRow > 1 then 1 else 0),
+      colSpan: @getCellSpan(),
       textContent: '',
       className: 'totals-spacer'
     })

@@ -10,7 +10,7 @@ class XCard.ScoreCell extends XCard.BasicCell
   #
 
   #
-  # If @unused the cell is 'dark'
+  # If @unused the cell is 'striped out'
   #
   constructor: (@scoreData = {}, @unused = false)->
     super()

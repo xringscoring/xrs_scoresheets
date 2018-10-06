@@ -17,6 +17,8 @@ class XCard.DistanceConfig
       titleCellSpan: null
     }, options)
 
+    # Transpose various options/config items into this object
+    @distanceIndex = @options.distanceIndex
     @goldScore = @options.goldScore
     @shotsPerEnd = @options.shotsPerEnd
     @totalShots = @options.totalShots
@@ -38,7 +40,7 @@ class XCard.DistanceConfig
     @cellsPerEnd = @getCellsPerEnd()
     @endTotalCells = if @endsPerRow is 1 then 0 else @endsPerRow
 
-    @titleCellSpan = @options.titleCellSpan ? @getTitleCellSpan()
+    # @titleCellSpan = @options.titleCellSpan ? @getTitleCellSpan()
 
   getCellsPerEnd: ()->
     return 3 if @isMatch()
@@ -62,10 +64,9 @@ class XCard.DistanceConfig
     if @isMatch() and (@options.distanceIndex > 0)
       return 3
 
-    @numberOfEnds / @endsPerRow
-
-  getTitleCellSpan: ()->
-    (@endsPerRow * @cellsPerEnd) + @endTotalCells
+    # Some round have 1.5 dozen, for example, but we always
+    # want complete rows
+    Math.round(@numberOfEnds / @endsPerRow)
 
   isMatch: () ->
     @options.recurveMatch or @options.compoundMatch

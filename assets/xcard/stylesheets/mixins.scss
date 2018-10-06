@@ -1,0 +1,9 @@
+@mixin striper($color) {
+  background: repeating-linear-gradient(
+    -45deg,
+    $light-gray,
+    $light-gray 5px,
+    $color 5px,
+    $color 10px
+  );
+}

@@ -6,6 +6,24 @@ QUnit.test "without scoring", (assert)->
   assert.equal block.config.rowCount, 6, 'row count correct'
 
 
+QUnit.module('Odd end count rounds')
+QUnit.test "Half Metric rounds have 1.5-dozen rows", (assert)->
+  tRound = new XCard.TargetDataAdapter(getTargetRound('half_metric_gents'), 'recurve')
+  config = new XCard.DistanceConfig(tRound.distances[0])
+  block = new XCard.DistanceBlock(config: config)
+  assert.equal block.config.rowCount, 2, 'row count correct'
+  assert.equal(block.rows[2].constructor.name, 'ScoringRow', 'is a ScoringRow')
+  assert.equal(block.rows[2].scoringEnds.length, 2, 'Scoring ends count correct')
+
+  scoringEnd = block.rows[2].scoringEnds[0]
+  assert.ok(scoringEnd.endInUse, 'scoring cell in use')
+  assert.equal(scoringEnd.cells()[0].attributes['className'], "score-cell", 'correct class')
+
+  nonScoringEnd = block.rows[2].scoringEnds[1]
+  assert.notOk(nonScoringEnd.endInUse, 'scoring cell unused')
+  assert.equal(nonScoringEnd.cells()[0].attributes['className'], "score-cell unused", 'correct class')
+
+
 QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert)->
   config = new XCard.DistanceConfig({
     shotsPerEnd: 6,
@@ -19,7 +37,7 @@ QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert
   assert.equal(block.config.shotsPerEnd, 6, 'shots per end')
   assert.equal(block.config.endsPerRow, 2, 'ends per row')
   assert.equal(block.config.rowCount, 3, 'row count is correct')
-  assert.equal(block.config.titleCellSpan, 14, 'title cellspan')
+  # assert.equal(block.config.titleCellSpan, 14, 'title cellspan')
 
 
 QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
@@ -82,7 +100,7 @@ QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
   assert.equal(block.config.withPoints, false, 'points not shown')
   assert.equal(block.config.endsPerRow, 2, 'ends per row')
   assert.equal(block.config.rowCount, 10, 'row count')
-  assert.equal(block.config.titleCellSpan, 8, 'title cell span')
+  # assert.equal(block.config.titleCellSpan, 8, 'title cell span')
   assert.equal(block.rows[0].constructor.name, 'DistanceHeaderRow', 'constructor name correct')
 
   assert.equal(block.chunkedEndsScoreData[0].length, 2)

@@ -8,6 +8,7 @@ class XCard.TargetDataAdapter
     @parseRoundDefinition()
     @ensureLeftPadding()
 
+  # TODO: experiment with this = not sure if required
   ensureLeftPadding: () ->
     for distanceDef, i in @distances
       @distances[i]['leftPaddingCellCount'] = (@maxShotsPerEnd - distanceDef['shotsPerEnd']) * 2

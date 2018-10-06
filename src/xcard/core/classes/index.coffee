@@ -3,6 +3,7 @@
 #= require xcard/core/classes/basic_cell
 #= require xcard/core/classes/distance_config
 #= require xcard/core/classes/distance_header_row
+#= require xcard/core/classes/distance_title_cells
 #= require xcard/core/classes/distance_totals_row
 #= require xcard/core/classes/score_cell
 #= require xcard/core/classes/scoring_end

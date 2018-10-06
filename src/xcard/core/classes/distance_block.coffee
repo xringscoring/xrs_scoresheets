@@ -23,17 +23,20 @@ class XCard.DistanceBlock
       })
     ]
 
-    for r in [1..@config.rowCount]
+    for r in [0..@config.rowCount - 1]
       @rows.push( new XCard.ScoringRow({
+        rowIndex: r,
         config: @config,
         totals: @totalizer
-      }, @chunkedEndsScoreData[r - 1]))
+      }, @chunkedEndsScoreData[r]))
 
-    @rows.push new XCard.DistanceTotalsRow({
-      config: @config,
-      totals: @totalizer,
-      cellSpan: @config.titleCellSpan
-    })
+    # Match round tie break blocks need no totals row
+    if !(@config.isMatch() and @config.distanceIndex isnt 0)
+      @rows.push new XCard.DistanceTotalsRow({
+        config: @config,
+        totals: @totalizer,
+        cellSpan: @config.titleCellSpan
+      })
 
   toHtml: ()->
     element = document.createElement(@options.element)

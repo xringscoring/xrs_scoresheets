@@ -8,7 +8,7 @@ class XCard.ScoringRow
 
   constructor: (options = {}, @endScoresData = []) ->
     @options = Object.assign({
-      # cellCount: 3,
+      rowIndex: 0,
       element: 'tr',
       # endCount: 1,
       config: null
@@ -27,6 +27,7 @@ class XCard.ScoringRow
     for i in [1..@config.endsPerRow]
       scoreData = @endScoresData[i - 1] ? {}
       scoringEnd = new XCard.ScoringEnd({
+        endInUse: @ensureEndInUse(i),
         config: @config,
         cellCount: @config.cellsPerEnd,
         scores: scoreData['shots'] ? [],
@@ -40,6 +41,9 @@ class XCard.ScoringRow
       scoringEnds: @scoringEnds,
       totals: @options.totals
     })
+
+  ensureEndInUse: (endNumber)->
+    ((@options.rowIndex + 1) * endNumber) <= @config.numberOfEnds
 
   toHtml: ()->
     element = XCard.makeElement(@options.element, {

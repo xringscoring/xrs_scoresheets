@@ -22,12 +22,14 @@ class XCard.ScoringEnd
   # shotsPerEnd/cellCount determines unused cells
   constructor: (options = {}) ->
     @options = Object.assign({
+      endInUse: true,
       cellCount: 3,
       scores: [],
       points: 0,
       config: null
     }, options)
 
+    @endInUse = @options.endInUse
     @endTotalCell = null
 
     unless @options.config?
@@ -44,7 +46,7 @@ class XCard.ScoringEnd
   buildScoringCells: () ->
     @scoringCells = []
     for i in [1..@options.cellCount]
-      unused = if i > @options.config.shotsPerEnd then true else false
+      unused = @isUnusedCell(i)
       scores = @options.scores[i - 1] ? {}
       @scoringCells.push new XCard.ScoreCell(scores, unused)
 
@@ -60,6 +62,10 @@ class XCard.ScoringEnd
     ary = @scoringCells.slice(0)
     ary.push( @endTotalCell ) if @endTotalCell?
     ary
+
+  isUnusedCell: (cellNumber)->
+    return true unless @endInUse
+    return if cellNumber > @options.config.shotsPerEnd then true else false
 
   hasAtLeastOneScore: ()->
     @scoringCells.filter( (sc)->
