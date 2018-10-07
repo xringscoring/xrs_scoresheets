@@ -16,10 +16,14 @@ class XCard.TargetDataAdapter
   parseRoundDefinition: () ->
     @distances = []
     @maxShotsPerEnd = 0
+    @totalShots = 0
+    @scoringScheme = @targetRoundDefinition['scoring_scheme']
+
     for d, i in @targetRoundDefinition.distances
       distanceDef = @distanceDefinition(d, i)
       @distances.push distanceDef
       @maxShotsPerEnd = if distanceDef['shotsPerEnd'] > @maxShotsPerEnd then distanceDef['shotsPerEnd'] else @maxShotsPerEnd
+      @totalShots += distanceDef['totalShots']
 
   distanceDefinition: (distanceDef, index) ->
     distanceIndex: index,

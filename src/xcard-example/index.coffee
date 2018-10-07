@@ -12,6 +12,15 @@ window.addEventListener 'load', (e)->
     tData = mappedRounds[newRound]
     tRound = new XCard.TargetDataAdapter(tData, bowType)
 
+    scoringScheme = tRound.scoringScheme
+    totalShots = tRound.totalShots
+
+    console.info(scoringScheme)
+    console.info(totalShots)
+
+    autoScore = new window.AutoScoring()
+
+
     for d in tRound.distances
       config = new XCard.DistanceConfig(d)
       block = new XCard.DistanceBlock({config: config})

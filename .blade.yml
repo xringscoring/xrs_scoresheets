@@ -5,6 +5,7 @@ load_paths:
   - src
 
 logical_paths:
+  - autoscoring.js
   - xcard.js
   - xcard-example.js
   - test.js
@@ -12,6 +13,7 @@ logical_paths:
 
 build:
   logical_paths:
+    - autoscoring.js
     - xcard.js
     - xcard-example.js
     - xcard-data.js
