@@ -40,7 +40,7 @@ QUnit.test "DistanceBlock configures for regular multi-distance shoots", (assert
   # assert.equal(block.config.titleCellSpan, 14, 'title cellspan')
 
 
-QUnit.test "DistanceBlock configures for indoor-type shoot", (assert)->
+QUnit.test "DistanceBlock configures for indoor-type shoot with 3 ends complete", (assert)->
   endsData = [
     {
       shots: [

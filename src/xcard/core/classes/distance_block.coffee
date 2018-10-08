@@ -1,6 +1,6 @@
 class XCard.DistanceBlock
 
-  constructor: (options = {}, @endsScoreData = {})->
+  constructor: (options = {}, @endsScoreData = [])->
     @options = Object.assign({
       element: 'tbody',
       config: null
@@ -10,7 +10,7 @@ class XCard.DistanceBlock
       throw 'Distance configuration is required'
 
     @config = @options.config
-    @totalizer = @options.totalizer ? new XCard.Totalizer({config: @config})
+    @totalizer = @options.totalizer ? new XCard.Totalizer({ config: @config })
 
     @configureBlock()
 

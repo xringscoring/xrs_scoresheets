@@ -1,28 +1,20 @@
-class XCard.DistanceTotalsRow
+class XCard.DistanceTotalsRow extends XCard.BlockElement
 
   {displayCell} = XCard
 
   constructor: (options = {})->
-    @options = Object.assign({
-      config: null,
-      totals: null
-    }, options)
-
-    unless @options.config?
-      throw "DistanceTotalsRow requires DistanceConfig"
-
-    @config = @options.config
+    super(options)
 
     @cells = [
       @getSpacerCell(),
     ]
 
-    @cells.push @getRowHitsCell() if @options.config.withHits
-    @cells.push @getRowGoldsCell() if @options.config.withGolds
-    @cells.push @getRowXCell() if @options.config.withX
-    @cells.push @getRowPointsCell() if @options.config.withPoints
+    @cells.push @getRowHitsCell() if @config.withHits
+    @cells.push @getRowGoldsCell() if @config.withGolds
+    @cells.push @getRowXCell() if @config.withX
     @cells.push @getRunningTotalCell()
-    @cells.push @getRunningTotalPointsCell() if @options.config.withPoints
+    @cells.push @getRowPointsCell() if @config.withPoints
+    @cells.push @getRunningTotalPointsCell() if @config.withPoints
 
   getCellSpan: () ->
     if @config.endsPerRow is 1
@@ -48,8 +40,9 @@ class XCard.DistanceTotalsRow
   getRowHitsCell: ()->
     displayCell(@forDisplay(@options.totals.totalHits.toString()), 'total-hits-cell')
 
+  # This should be empty, as TOT PT will show overall count
   getRowPointsCell: ()->
-    displayCell(@forDisplay(@options.totals.totalPoints.toString()), 'total-points-cell')
+    displayCell(@forDisplay(''), 'total-points-cell unused')
 
   getRowXCell: ()->
     displayCell(@forDisplay(@options.totals.totalX.toString()), 'total-x-cell')
@@ -66,6 +59,9 @@ class XCard.DistanceTotalsRow
 
   toHtml: ()->
     element = new XCard.BasicElement({ className: 'totals-row' }, 'tr').toHtml()
+
+    for pCell in @paddingCells
+      element.appendChild(pCell.toHtml())
 
     # Then total cells
     for c in @cells.slice(0)

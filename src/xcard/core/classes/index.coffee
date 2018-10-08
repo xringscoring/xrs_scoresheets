@@ -1,14 +1,15 @@
 #= require xcard/core/classes/distance_block
 #= require xcard/core/classes/basic_element
 #= require xcard/core/classes/basic_cell
+#= require xcard/core/classes/block_element
 #= require xcard/core/classes/distance_config
 #= require xcard/core/classes/distance_header_row
 #= require xcard/core/classes/distance_title_cells
 #= require xcard/core/classes/distance_totals_row
+#= require xcard/core/classes/score_card
 #= require xcard/core/classes/score_cell
 #= require xcard/core/classes/scoring_end
 #= require xcard/core/classes/scoring_row
 #= require xcard/core/classes/scoring_row_totals
 #= require xcard/core/classes/end_total_cell
-#= require xcard/core/classes/target_data_adapter
 #= require xcard/core/classes/totalizer

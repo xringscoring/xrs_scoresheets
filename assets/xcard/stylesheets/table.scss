@@ -29,6 +29,10 @@ td {
   vertical-align: middle;
 }
 
+td.padding-cell {
+  border: none;
+}
+
 td.end-total-cell {
   background-color: $light-gray;
   // color: white;
@@ -39,6 +43,10 @@ td.row-total-score, .row-golds-total, .row-hits-total, .row-x-total, .row-runnin
   // color: white;
   padding: 5px 10px;
   font-weight: bold;
+}
+
+td.row-running-total {
+  min-width: $cell-size * 2;
 }
 
 td.unused {

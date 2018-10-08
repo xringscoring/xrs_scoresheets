@@ -28,6 +28,8 @@ class XCard.ScoringRowTotals
     @buildTotals()
 
   buildTotals: ()->
+    @rowTotalPoints = 0
+
     @rowTotalScore = @getRowTotalScore()
     @options.totals.totalScore += @rowTotalScore
 
@@ -40,7 +42,7 @@ class XCard.ScoringRowTotals
     @rowTotalX = @getRowTotalX()
     @options.totals.totalX += @rowTotalX
 
-    if @options.withPoints
+    if @config.withPoints
       @rowTotalPoints = @getRowTotalPoints()
       @options.totals.totalPoints += @rowTotalPoints
 
@@ -91,7 +93,9 @@ class XCard.ScoringRowTotals
     , 0)
 
   getRowTotalX: ()->
-    0
+    @scoringEnds.reduce((accum, se)->
+      accum + se.totalX()
+    , 0)
 
   getRowTotalHits: ()->
     @scoringEnds.reduce((accum, se)->

@@ -6,28 +6,37 @@ window.addEventListener 'load', (e)->
     return m
   , {})
 
+  getRandomScore = (min, max)->
+    Math.floor(Math.random() * (max - min + 1)) + min
+
+  getScoreData = (shortName)->
+    return {} unless window.SHOOT_DATA?
+    window.SHOOT_DATA[newRound] ? {}
+
+  evenizedScore = (score)->
+    2 * Math.round(score / 2)
+
+  updateRoundName = (name)->
+    roundNameSpan = document.getElementById('round-name')
+    roundNameSpan.innerText = "[ #{name } ]"
+
   buildTable = (newRound, bowType)->
     html = "<thead></thead>"
 
     tData = mappedRounds[newRound]
-    tRound = new XCard.TargetDataAdapter(tData, bowType)
 
-    scoringScheme = tRound.scoringScheme
-    totalShots = tRound.totalShots
+    tableElement = document.getElementById('xcard-table')
 
-    console.info(scoringScheme)
-    console.info(totalShots)
+    scorecard = new XCard.Scorecard({
+      targetRoundDefinition: tData
+      tableElement: tableElement
+      scoreData: getScoreData(newRound)
+      bowType: bowType
+    })
 
-    autoScore = new window.AutoScoring()
+    tableElement.innerHTML = scorecard.html()
 
-
-    for d in tRound.distances
-      config = new XCard.DistanceConfig(d)
-      block = new XCard.DistanceBlock({config: config})
-      html = html + block.toHtml().outerHTML
-
-    table = document.getElementById('xcard-table')
-    table.innerHTML = html
+    updateRoundName(tData['name'])
 
     document.getElementById('hiddenBlock').style.display = "block"
 
@@ -43,7 +52,6 @@ window.addEventListener 'load', (e)->
     bowType = document.getElementById('bowType').value
     if newRound isnt ''
       buildTable(newRound, bowType)
-
 
   document.getElementById("bowType").addEventListener 'change', (event)->
     bowType = event.target.value

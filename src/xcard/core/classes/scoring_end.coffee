@@ -89,5 +89,11 @@ class XCard.ScoringEnd
       accum
     , 0)
 
+  totalX: ()->
+    @scoringCells.filter( (sc)->
+      txt = sc.getTextContent()
+      txt is 'x'
+    ).length
+
   totalPoints: ()->
     @options.points

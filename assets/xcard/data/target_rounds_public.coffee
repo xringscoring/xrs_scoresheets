@@ -491,7 +491,7 @@ window.TARGET_ROUNDS = [
     },
     {
         "deactivated":false,
-        "default_shots_per_end":3,
+        "default_shots_per_end":6,
         "default_target_face":"fita",
         "default_target_size":80,
         "distances":[

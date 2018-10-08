@@ -1,6 +1,6 @@
 class XCard.DistanceConfig
 
-  constructor: (options = {}) ->
+  constructor: (options = {}, scoreData = {}, totalizer = null) ->
     @options = Object.assign({
       distanceIndex: 0,
       shotsPerEnd: 6,
@@ -14,13 +14,17 @@ class XCard.DistanceConfig
       recurveMatch: false,
       compoundMatch: false,
       withTotalHeaders: true
-      titleCellSpan: null
+      titleCellSpan: null,
+      leftPaddingCellCount: 0
     }, options)
+
+    @scoreData = scoreData
 
     # Transpose various options/config items into this object
     @distanceIndex = @options.distanceIndex
     @goldScore = @options.goldScore
-    @shotsPerEnd = @options.shotsPerEnd
+    @leftPaddingCellCount = @options.leftPaddingCellCount
+    @shotsPerEnd = @getShotsPerEnd()
     @totalShots = @options.totalShots
     @title = @options.title
 
@@ -67,6 +71,11 @@ class XCard.DistanceConfig
     # Some round have 1.5 dozen, for example, but we always
     # want complete rows
     Math.round(@numberOfEnds / @endsPerRow)
+
+  # Enable override of target round definition by incoming
+  # scoring data
+  getShotsPerEnd: ()->
+    @scoreData.shotsPerEnd or @options.shotsPerEnd
 
   isMatch: () ->
     @options.recurveMatch or @options.compoundMatch

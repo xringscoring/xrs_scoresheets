@@ -10,8 +10,9 @@ class XCard.TargetDataAdapter
 
   # TODO: experiment with this = not sure if required
   ensureLeftPadding: () ->
-    for distanceDef, i in @distances
-      @distances[i]['leftPaddingCellCount'] = (@maxShotsPerEnd - distanceDef['shotsPerEnd']) * 2
+    unless @isMatchRound()
+      for distanceDef, i in @distances
+        @distances[i]['leftPaddingCellCount'] = (@maxShotsPerEnd - distanceDef['shotsPerEnd']) * 2
 
   parseRoundDefinition: () ->
     @distances = []

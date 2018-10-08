@@ -4,21 +4,17 @@
 # endScoresData should be array of literal objects containing 'shots' array
 #
 
-class XCard.ScoringRow
+class XCard.ScoringRow extends XCard.BlockElement
 
   constructor: (options = {}, @endScoresData = []) ->
-    @options = Object.assign({
-      rowIndex: 0,
-      element: 'tr',
-      # endCount: 1,
+    opts = Object.assign({
+      rowIndex: 0
       config: null
       totals: null
     }, options)
 
-    unless @options.config?
-      throw "ScoringRow requires DistanceConfig"
+    super(opts)
 
-    @config = @options.config
     @buildScoringEnds()
     @buildTotalsBlock()
 
@@ -26,13 +22,16 @@ class XCard.ScoringRow
     @scoringEnds = []
     for i in [1..@config.endsPerRow]
       scoreData = @endScoresData[i - 1] ? {}
+      scores = @orderedScores(scoreData['shots'] ? [])
+
       scoringEnd = new XCard.ScoringEnd({
         endInUse: @ensureEndInUse(i),
         config: @config,
         cellCount: @config.cellsPerEnd,
-        scores: scoreData['shots'] ? [],
-        points: scoreData['matchPoints'] ? 0
+        scores: scores,
+        points: @pointsForRow(scoreData)
       })
+
       @scoringEnds.push scoringEnd
 
   buildTotalsBlock: () ->
@@ -45,10 +44,28 @@ class XCard.ScoringRow
   ensureEndInUse: (endNumber)->
     ((@options.rowIndex + 1) * endNumber) <= @config.numberOfEnds
 
+  orderedScores: (scores = [])->
+    scores.slice(0).map((s)->
+      scr = parseInt(s.score ? 0, 10)
+      txt = s.text ? ''
+      s._tempScore = if txt.toString().match(/x/i)? then 11 else scr
+      s
+    ).sort((a, b)->
+      b._tempScore - a._tempScore
+    )
+
+  # Zero points should not show up (if matchResult is -1, it means
+  # the end has not been scored, so no scoring cells should be asserted yet)
+  pointsForRow: (scoreData)->
+    points = parseInt(scoreData['matchEndResult'] ? 0, 10)
+    return 0 if points is -1
+    points
+
   toHtml: ()->
-    element = XCard.makeElement(@options.element, {
-      className: 'scoring-row'
-    })
+    element = new XCard.BasicElement({ className: 'scoring-row' }, 'tr').toHtml()
+    
+    for pCell in @paddingCells
+      element.appendChild(pCell.toHtml())
 
     for se in @scoringEnds
       for sc in se.cells()

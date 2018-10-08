@@ -43,7 +43,7 @@ h2 {
   font-weight: normal; }
 
 ul {
-  margin-top: 30px;
+  margin-top: 50px;
   font-size: 0.6em;
   list-style-type: none; }
   ul li {
@@ -74,6 +74,9 @@ td {
   text-align: center;
   vertical-align: middle; }
 
+td.padding-cell {
+  border: none; }
+
 td.end-total-cell {
   background-color: #F8F8F8; }
 
@@ -81,6 +84,9 @@ td.row-total-score, .row-golds-total, .row-hits-total, .row-x-total, .row-runnin
   background-color: #F8F8F8;
   padding: 5px 10px;
   font-weight: bold; }
+
+td.row-running-total {
+  min-width: 80px; }
 
 td.unused {
   background: repeating-linear-gradient(-45deg, #F8F8F8, #F8F8F8 5px, #C0C0C0 5px, #C0C0C0 10px); }

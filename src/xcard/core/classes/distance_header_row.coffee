@@ -1,16 +1,9 @@
-class XCard.DistanceHeaderRow
+class XCard.DistanceHeaderRow extends XCard.BlockElement
 
   {displayCell} = XCard
 
   constructor: (options = {})->
-    @options = Object.assign({
-      config: null
-    }, options)
-
-    unless @options.config?
-      throw "DistanceHeaderRow requires DistanceConfig"
-
-    @config = @options.config
+    super(options)
 
     @totalsFunctionMap =
       'h': [ 'getRowHitsCell', @config.withHits ],
@@ -22,7 +15,7 @@ class XCard.DistanceHeaderRow
       'tp': [ 'getRunningTotalPointsCell', @config.withPoints ]
 
     @cells = new XCard.DistanceTitleCells({config: @config}).cells
-    
+
     for totalsItem in @config.totalsOrder
       f = @totalsFunctionMap[totalsItem]
       if f[1]
@@ -44,7 +37,7 @@ class XCard.DistanceHeaderRow
     displayCell(@forDisplay('x'), "row-x-cell")
 
   getRunningTotalCell: ()->
-    displayCell(@forDisplay('tot'), "running-total-cell")
+    displayCell(@forDisplay('tot'), "running-total-cell wide")
 
   getRunningTotalPointsCell: ()->
     displayCell(@forDisplay('tot pt'), "running-total-points-cell")
@@ -57,6 +50,9 @@ class XCard.DistanceHeaderRow
 
   toHtml: ()->
     element = new XCard.BasicElement({ className: 'header-row' }, 'tr').toHtml()
+
+    for pCell in @paddingCells
+      element.appendChild(pCell.toHtml())
 
     # Then total cells
     for c in @cells.slice(0)
