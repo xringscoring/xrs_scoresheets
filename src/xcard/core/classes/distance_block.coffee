@@ -25,8 +25,8 @@ class XCard.DistanceBlock
 
     for r in [0..@config.rowCount - 1]
       @rows.push( new XCard.ScoringRow({
-        rowIndex: r,
-        config: @config,
+        rowIndex: r
+        config: @config
         totals: @totalizer
       }, @chunkedEndsScoreData[r]))
 

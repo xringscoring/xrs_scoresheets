@@ -15,6 +15,8 @@ class XCard.ScoringRow extends XCard.BlockElement
 
     super(opts)
 
+    @distanceIndex = @config.distanceIndex
+    
     @buildScoringEnds()
     @buildTotalsBlock()
 
@@ -63,7 +65,7 @@ class XCard.ScoringRow extends XCard.BlockElement
 
   toHtml: ()->
     element = new XCard.BasicElement({ className: 'scoring-row' }, 'tr').toHtml()
-    
+
     for pCell in @paddingCells
       element.appendChild(pCell.toHtml())
 
