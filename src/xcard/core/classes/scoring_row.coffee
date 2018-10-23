@@ -16,7 +16,7 @@ class XCard.ScoringRow extends XCard.BlockElement
     super(opts)
 
     @distanceIndex = @config.distanceIndex
-    
+
     @buildScoringEnds()
     @buildTotalsBlock()
 
@@ -44,7 +44,8 @@ class XCard.ScoringRow extends XCard.BlockElement
     })
 
   ensureEndInUse: (endNumber)->
-    ((@options.rowIndex + 1) * endNumber) <= @config.numberOfEnds
+    ok = ((@options.rowIndex + 1) * endNumber) <= @config.numberOfEnds
+    ok or @endScoresData[endNumber - 1]? # Handle match tie-breaks
 
   orderedScores: (scores = [])->
     scores.slice(0).map((s)->

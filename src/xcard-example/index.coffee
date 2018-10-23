@@ -11,7 +11,7 @@ window.addEventListener 'load', (e)->
 
   getScoreData = (shortName)->
     return {} unless window.SHOOT_DATA?
-    window.SHOOT_DATA[newRound] ? {}
+    window.SHOOT_DATA[shortName] ? {}
 
   evenizedScore = (score)->
     2 * Math.round(score / 2)

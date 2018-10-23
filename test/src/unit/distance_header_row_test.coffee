@@ -8,7 +8,7 @@ QUnit.test "DistanceHeaderRow builds correctly for general shoot", (assert)->
     config: config
   })
 
-  result = "<tr class=\"header-row\"><td class=\"title-cell\" colspan=\"6\">80yd</td><td class=\"header-et-cell\">et</td><td class=\"header-spacer-cell\" colspan=\"6\"></td><td class=\"header-et-cell\">et</td><td class=\"row-total-cell\">s</td><td class=\"row-hits-cell\">h</td><td class=\"row-golds-cell\">g</td><td class=\"running-total-cell\">tot</td></tr>"
+  result = "<tr class=\"header-row\"><td class=\"title-cell\" colspan=\"6\">80yd</td><td class=\"header-et-cell\">et</td><td class=\"header-spacer-cell\" colspan=\"6\"></td><td class=\"header-et-cell\">et</td><td class=\"row-total-cell\">s</td><td class=\"row-hits-cell\">h</td><td class=\"row-golds-cell\">g</td><td class=\"running-total-cell wide\">tot</td></tr>"
 
   assert.equal(headerRow.toHtmlString(), result)
 
@@ -24,6 +24,6 @@ QUnit.test "DistanceHeaderRow builds correctly for match shoot", (assert)->
     config: config
   })
 
-  result = "<tr class=\"header-row\"><td class=\"title-cell\" colspan=\"3\">80yd</td><td class=\"row-golds-cell\">g</td><td class=\"row-x-cell\">x</td><td class=\"running-total-cell\">tot</td><td class=\"row-points-cell\">pt</td><td class=\"running-total-points-cell\">tot pt</td></tr>"
+  result = "<tr class=\"header-row\"><td class=\"title-cell\" colspan=\"3\">80yd</td><td class=\"row-golds-cell\">g</td><td class=\"row-x-cell\">x</td><td class=\"running-total-cell wide\">tot</td><td class=\"row-points-cell\">pt</td><td class=\"running-total-points-cell\">tot pt</td></tr>"
 
   assert.equal(headerRow.toHtmlString(), result)
